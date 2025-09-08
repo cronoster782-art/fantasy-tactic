@@ -1,0 +1,39 @@
+/* src/app/page.module.css */
+
+.container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoWrapper {
+  /* CAMBIO: La animación ahora dura 6.5 segundos. */
+  animation: smoothZoomAndFade 6.5s ease-in-out forwards;
+  display: block;
+  font-size: 0;
+  line-height: 0;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+@keyframes smoothZoomAndFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.8); /* Empieza un poco más pequeño */
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1); /* Crece hasta su tamaño normal y se queda fijo */
+  }
+  85% {
+    opacity: 1; /* Permanece visible justo antes de desvanecerse */
+  }
+  100% {
+    opacity: 0; /* Desaparece por completo */
+    transform: scale(1);
+  }
+}
+
