@@ -7,7 +7,7 @@ import { FORMACION_ACTUAL, MI_EQUIPO_INFO } from "@/equipo-data";
 import { getPositionsForFormation, NOMBRES_FORMACIONES } from "@/rival-data";
 import styles from "./equipo.module.css";
 
-// --- Componentes de la Interfaz ---
+// --- Componentes de la Interfaz (sin cambios) ---
 function EstadoIcon({ estado }: { estado: Jugador['estado'] }) {
   switch (estado.tipo) {
     case 'lesionado': return <div className={`${styles.estadoOverlay} ${styles.lesionado}`}>+</div>;
@@ -41,7 +41,6 @@ function SuplenteCard({ jugador, onClick, isHighlighted }: { jugador: Jugador, o
 function BanquilloSlotVacio() {
     return <div className={styles.banquilloSlotVacio}></div>;
 }
-// Este componente se usa en la lista de abajo
 function JugadorCard({ jugador, onSellClick }: { jugador: Jugador; onSellClick: (j: Jugador) => void }) {
   const getPuntuacionClass = (p: number | null) => {
     if (p === null) return styles.noJugado;
@@ -79,6 +78,7 @@ export default function EquipoPage() {
   const [formacionSeleccionada, setFormacionSeleccionada] = useState(FORMACION_ACTUAL.formacion);
   const [modalVisible, setModalVisible] = useState(false);
   const [playerForModal, setPlayerForModal] = useState<Jugador | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false); // NUEVO ESTADO
 
   useEffect(() => {
     setTitulares(JUGADORES_EQUIPO);
@@ -92,6 +92,7 @@ export default function EquipoPage() {
       setSelectedTitular(titular);
     }
   };
+
   const handleSelectSuplente = (suplente: Jugador) => {
     if (selectedTitular && selectedTitular.posicion === suplente.posicion) {
       const newTitulares = titulares.map(t => t.id === selectedTitular.id ? suplente : t);
@@ -99,7 +100,19 @@ export default function EquipoPage() {
       setTitulares(newTitulares);
       setSuplentes(newSuplentes);
       setSelectedTitular(null);
+      setHasUnsavedChanges(true); // Se ha hecho un cambio
     }
+  };
+
+  const handleFormationChange = (newFormation: string) => {
+    setFormacionSeleccionada(newFormation);
+    setHasUnsavedChanges(true); // Se ha hecho un cambio
+  };
+
+  const handleSaveChanges = () => {
+    console.log("Guardando alineación...");
+    // Aquí iría la lógica para guardar los datos en un servidor o localStorage
+    setHasUnsavedChanges(false); // Se resetea el estado
   };
   
   const handleOpenModal = (jugador: Jugador) => {
@@ -143,7 +156,7 @@ export default function EquipoPage() {
                 <select 
                     className={styles.formationSelector}
                     value={formacionSeleccionada}
-                    onChange={(e) => setFormacionSeleccionada(e.target.value)}
+                    onChange={(e) => handleFormationChange(e.target.value)}
                 >
                     {NOMBRES_FORMACIONES.map(nombre => (
                         <option key={nombre} value={nombre}>{nombre}</option>
@@ -161,10 +174,15 @@ export default function EquipoPage() {
                     />
                 ))}
             </div>
+            {/* NUEVO BOTÓN DE GUARDAR */}
+            {hasUnsavedChanges && (
+                <button className={styles.saveButton} onClick={handleSaveChanges}>
+                    Guardar Alineación
+                </button>
+            )}
         </div>
       </div>
 
-      {/* SECCIÓN RESTAURADA: PLANTILLA COMPLETA */}
       <div className={styles.card}>
         <h2>Mi Plantilla (Total: {todaLaPlantilla.length}/18)</h2>
         <div className={styles.plantillaGrid}>
@@ -174,7 +192,6 @@ export default function EquipoPage() {
         </div>
       </div>
       
-      {/* Ventana Modal para Venta */}
       {modalVisible && playerForModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>

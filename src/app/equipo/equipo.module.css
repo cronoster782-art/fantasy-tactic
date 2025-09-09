@@ -103,10 +103,9 @@
   width: 100%;
   aspect-ratio: 7 / 10;
   background-image: url('/campo-textura.jpg');
-  /* CAMBIO: Usamos 'contain' para que la imagen se vea siempre completa */
   background-size: contain;
   background-position: center;
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-repeat: no-repeat;
   border: 2px solid #fff;
   border-radius: 8px;
   display: grid;
@@ -202,6 +201,26 @@
   border-color: #FFD700;
   box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.5);
 }
+
+/* === ESTILO PARA EL BOTÓN DE GUARDAR === */
+.saveButton {
+    margin-top: 1.5rem;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    background-color: #5cb85c;
+    border: 2px solid #fff;
+    border-style: solid;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+}
+
+.saveButton:hover {
+    background-color: #4CAF50;
+    transform: scale(1.02);
+}
+/* ============================================== */
 
 .plantillaGrid {
   display: grid;
