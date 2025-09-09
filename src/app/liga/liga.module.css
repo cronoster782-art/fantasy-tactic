@@ -17,9 +17,67 @@
   box-sizing: border-box;
 }
 
+/* === ESTILOS ACTUALIZADOS Y NUEVOS === */
+.jornada-header {
+  display: flex;
+  justify-content: center; /* Centra el título */
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative; /* Para posicionar los botones */
+}
+
+.jornada-header h2 {
+  margin: 0;
+}
+
+/* Posicionamos los botones a los lados */
+.jornada-header button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  /* Eliminamos estilos de botón innecesarios */
+  background: transparent;
+  border: none;
+  font-size: 2rem; /* Hacemos las flechas más grandes */
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.jornada-header button:first-child {
+  left: 0;
+}
+
+.jornada-header button:last-child {
+  right: 0;
+}
+
+/* Nueva clase para la celda del resultado */
+.resultadoCell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px; /* Pequeño espacio entre resultado y botón */
+}
+
+.enJuegoBtn {
+  background: none; /* Quitamos el fondo */
+  color: #5cb85c; /* Color verde para la fuente */
+  padding: 2px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+.enJuegoBtn:hover {
+  transform: scale(1.1); /* Efecto al pasar el ratón */
+}
+/* ======================================= */
+
 .table-container {
   width: 100%;
-  overflow-x: auto; /* Para que la tabla se pueda desplazar en móviles */
+  overflow-x: auto;
 }
 
 .table {
@@ -36,11 +94,6 @@
   font-size: 0.85rem;
 }
 
-/* ================================================= */
-/* MEJORA: Aplicamos el color a las celdas (td)      */
-/* dentro de la fila, así no necesitamos !important */
-/* ================================================= */
-
 .pos-1 td {
   color: rgb(238, 221, 128);
   font-weight: bold;
@@ -55,3 +108,4 @@
   color: #e7796d;
   font-weight: bold;
 }
+

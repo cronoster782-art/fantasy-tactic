@@ -1,0 +1,129 @@
+/* src/app/enfrentamiento/[id]/enfrentamiento.module.css */
+
+.main {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Alinea arriba */
+  min-height: 80vh;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 1600px; /* Hacemos el contenedor más ancho */
+  box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.vs {
+    font-size: 2rem;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+/* === NUEVO DISEÑO POR ZONAS === */
+
+.enfrentamientoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.zonaEnfrentamiento {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/pizarra.jpg');
+    background-size: cover;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+}
+
+.equipoZona {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    flex: 1; /* Ocupa el espacio disponible */
+    justify-content: center;
+}
+
+.marcadorZona {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 2rem;
+    text-align: center;
+}
+.marcadorZona h3 {
+    margin: 0 0 0.5rem 0;
+}
+.ventajaLocal {
+    font-size: 0.7rem;
+    color: #ccc;
+    background-color: rgba(0,0,0,0.5);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+/* Colores dinámicos del fondo de la zona */
+.neutral {
+    background-color: rgba(60, 60, 150, 0.3); /* Azul por defecto */
+    border-color: rgba(60, 60, 150, 0.8);
+}
+.ganando {
+    background-color: rgba(40, 120, 40, 0.3); /* Verde */
+    border-color: #5cb85c;
+}
+.empatando {
+    background-color: rgba(180, 160, 50, 0.3); /* Amarillo */
+    border-color: #f0ad4e;
+}
+.perdiendo {
+    background-color: rgba(150, 40, 40, 0.3); /* Rojo */
+    border-color: #d9534f;
+}
+
+
+/* Ficha del jugador */
+.fichaEnfrentamiento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+  text-align: center;
+  gap: 2px;
+  width: 60px;
+}
+.fichaNombre {
+  font-size: 0.6rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.jugadorImagen {
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+}
+

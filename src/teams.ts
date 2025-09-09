@@ -26,15 +26,42 @@ export const TEAMS = [
 ];
 
 export const MATCHES = [
-  { id: 1, home: "Dragones FC", away: "Águilas Rojas", score: "2 - 1" },
-  { id: 2, home: "Leones United", away: "Tiburones CF", score: "1 - 1" },
-  { id: 3, home: "Lobos del Norte", away: "Panteras Doradas", score: "0 - 3" },
-  { id: 4, home: "Guerreros Azules", away: "Halcones Verdes", score: "2 - 2" },
-  { id: 5, home: "Toros Bravos", away: "Piratas del Sur", score: "1 - 0" },
-  { id: 6, home: "Cóndores FC", away: "Tigres Blancos", score: "3 - 2" },
-  { id: 7, home: "Osos Negros", away: "Linces Rojos", score: "0 - 1" },
-  { id: 8, home: "Delfines Celestes", away: "Búhos Nocturnos", score: "2 - 2" },
-  { id: 9, home: "Pumas Salvajes", away: "Zorros Plateados", score: "1 - 3" },
-  { id: 10, home: "Naranjitos F.C.", away: "Caballeros de Acero", score: "0 - 0" }, // Actualizamos también un partido
+  // Jornada 1
+  { id: 1, home: "Dragones FC", away: "Leones United", score: " - ", jornada: 1 },
+  { id: 2, home: "Tiburones CF", away: "Águilas Rojas", score: " - ", jornada: 1 },
+  { id: 3, home: "Lobos del Norte", away: "Panteras Doradas", score: " - ", jornada: 1 },
+  { id: 4, home: "Guerreros Azules", away: "Halcones Verdes", score: " - ", jornada: 1 },
+  { id: 5, home: "Toros Bravos", away: "Piratas del Sur", score: " - ", jornada: 1 },
+  { id: 6, home: "Cóndores FC", away: "Tigres Blancos", score: " - ", jornada: 1 },
+  { id: 7, home: "Osos Negros", away: "Linces Rojos", score: " - ", jornada: 1 },
+  { id: 8, home: "Delfines Celestes", away: "Búhos Nocturnos", score: " - ", jornada: 1 },
+  { id: 9, home: "Pumas Salvajes", away: "Zorros Plateados", score: " - ", jornada: 1 },
+  { id: 10, home: "Naranjitos F.C.", away: "Caballeros de Acero", score: " - ", jornada: 1 },
+
+  // Jornada 2
+  { id: 11, home: "Leones United", away: "Caballeros de Acero", score: " - ", jornada: 2 },
+  { id: 12, home: "Zorros Plateados", away: "Naranjitos F.C.", score: " - ", jornada: 2 },
+  { id: 13, home: "Búhos Nocturnos", away: "Pumas Salvajes", score: " - ", jornada: 2 },
+  { id: 14, home: "Linces Rojos", away: "Delfines Celestes", score: " - ", jornada: 2 },
+  { id: 15, home: "Tigres Blancos", away: "Osos Negros", score: " - ", jornada: 2 },
+  { id: 16, home: "Piratas del Sur", away: "Cóndores FC", score: " - ", jornada: 2 },
+  { id: 17, home: "Halcones Verdes", away: "Toros Bravos", score: " - ", jornada: 2 },
+  { id: 18, home: "Panteras Doradas", away: "Guerreros Azules", score: " - ", jornada: 2 },
+  { id: 19, home: "Águilas Rojas", away: "Lobos del Norte", score: " - ", jornada: 2 },
+  { id: 20, home: "Dragones FC", away: "Tiburones CF", score: " - ", jornada: 2 },
+
+  // Jornada 3
+  { id: 21, home: "Tiburones CF", away: "Leones United", score: " - ", jornada: 3 },
+  { id: 22, home: "Lobos del Norte", away: "Dragones FC", score: " - ", jornada: 3 },
+  { id: 23, home: "Guerreros Azules", away: "Águilas Rojas", score: " - ", jornada: 3 },
+  { id: 24, home: "Toros Bravos", away: "Panteras Doradas", score: " - ", jornada: 3 },
+  { id: 25, home: "Cóndores FC", away: "Halcones Verdes", score: " - ", jornada: 3 },
+  { id: 26, home: "Osos Negros", away: "Piratas del Sur", score: " - ", jornada: 3 },
+  { id: 27, home: "Delfines Celestes", away: "Tigres Blancos", score: " - ", jornada: 3 },
+  { id: 28, home: "Pumas Salvajes", away: "Linces Rojos", score: " - ", jornada: 3 },
+  { id: 29, home: "Naranjitos F.C.", away: "Búhos Nocturnos", score: " - ", jornada: 3 },
+  { id: 30, home: "Caballeros de Acero", away: "Zorros Plateados", score: " - ", jornada: 3 },
 ];
+
+
 

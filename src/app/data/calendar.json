@@ -1,0 +1,6 @@
+[
+  { "id": 1, "jornada": 1, "local": "Equipo A", "visitante": "Equipo B" },
+  { "id": 2, "jornada": 1, "local": "Equipo C", "visitante": "Equipo D" },
+  { "id": 3, "jornada": 2, "local": "Equipo B", "visitante": "Equipo C" },
+  { "id": 4, "jornada": 2, "local": "Equipo D", "visitante": "Equipo A" }
+]
