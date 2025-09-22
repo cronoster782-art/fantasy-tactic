@@ -6,25 +6,28 @@
   --font-chalk: 'Comic Sans MS', cursive;
 }
 
+/* --- BASE Y FONDO --- */
 html {
   height: 100%;
 }
 
 body {
+  min-height: 100%;
   margin: 0;
   padding: 0;
-}
-
-.app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: url('/pizarra.jpg') no-repeat center center fixed;
-  background-size: cover;
   font-family: var(--font-chalk), sans-serif;
   color: #fff;
+  background: url('/pizarra.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
+/* Regla para asegurar que el contenido de las páginas no tape el fondo */
+main {
+  background: transparent !important;
+}
+
+
+/* --- TIPOGRAFÍA --- */
 h1, h2, h3, h4, h5, h6, p, a, span, td, th, button {
   text-shadow: 
     1px 1px 2px rgba(255, 255, 255, 0.2),
@@ -41,9 +44,8 @@ h2 {
   margin: 15px 0;
 }
 
-/* ============================= */
-/* Navegación superior (pestañas) */
-/* ============================= */
+
+/* --- NAVEGACIÓN --- */
 nav {
   display: flex;
   justify-content: space-around;
@@ -59,6 +61,7 @@ nav a {
   text-align: center;
   padding: 10px 16px;
   transition: transform 0.2s ease, color 0.2s ease;
+  border-bottom: 3px solid transparent;
 }
 
 nav a:hover {
@@ -71,9 +74,27 @@ nav a.active {
   font-weight: bold;
 }
 
-/* ============================= */
-/* Botones estilo tiza */
-/* ============================= */
+
+/* --- CLASES DE LAYOUT --- */
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.content-padding {
+  /* Este valor debe ser la altura APROXIMADA de tu barra de navegación de dos niveles */
+  padding-top: 100px; 
+}
+
+.nav-hidden {
+  visibility: hidden;
+}
+
+
+/* --- BOTONES --- */
 button {
   background: rgba(0, 0, 0, 0.4);
   border: 2px dashed #fff;
@@ -89,27 +110,14 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* =================================== */
-/* TRANSICIÓN SUAVE ENTRE PÁGINAS (CORREGIDA) */
-/* =================================== */
 
+/* --- ANIMACIONES --- */
 @keyframes smoothFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .page-container-animated {
-  /* 1. Establecemos el estado inicial como invisible.
-     Esto evita que la página aparezca de golpe antes de la animación. */
   opacity: 0;
-  
-  /* 2. Aplicamos la animación de fundido. */
   animation: smoothFadeIn 0.4s ease-in-out forwards;
-}
-nextjs-portal {
-  display: none !important;
 }

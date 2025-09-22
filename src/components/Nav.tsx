@@ -9,22 +9,35 @@ import styles from './Nav.module.css';
 
 export default function Nav() {
     const pathname = usePathname();
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    // @ts-ignore
-    const username = session?.user?.username;
 
     return (
         <div className={`${styles.navContainer} fixed-nav`}>
             <div className={styles.topRow}>
-                {session && (
+                {/* Caso 1: La sesión está CARGANDO */}
+                {status === 'loading' && (
+                    <div className={styles.profileMenu}>
+                        <div className={styles.profileButton}>Cargando...</div>
+                    </div>
+                )}
+
+                {/* Caso 2: El usuario SÍ está autenticado (con comprobación extra) */}
+                {status === 'authenticated' && session && session.user && (
                     <div className={styles.profileMenu}>
                         <button 
                             className={styles.profileButton}
                             onClick={() => setIsDropdownOpen(prev => !prev)}
                         >
-                            {username || "Mi Perfil"}
+                            <img 
+                                src={session.user.avatar || '/logo-fantasy-tactic.png'} 
+                                alt="Avatar" 
+                                width={24} 
+                                height={24} 
+                                className={styles.profileAvatar} 
+                                onError={(e) => { e.currentTarget.src = '/logo-fantasy-tactic.png'; }}
+                            />
+                            {session.user.username || "Mi Perfil"}
                         </button>
                         {isDropdownOpen && (
                             <div className={styles.dropdown}>

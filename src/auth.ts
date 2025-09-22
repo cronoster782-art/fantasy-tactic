@@ -12,13 +12,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   secret: process.env.AUTH_SECRET,
   pages: {
-    signIn: '/login',
+    signIn: '/signin',
   },
 
   callbacks: {
     async jwt({ token, trigger, session }) {
+      // Si el trigger es una "update" (desde la página de Ajustes)...
       if (trigger === "update" && session) {
-        // Si la sesión se actualiza, pasamos los nuevos datos al token
+        // ...actualizamos el token con los nuevos datos.
         token.username = session.username;
         token.avatar = session.avatar;
       }
@@ -26,15 +27,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     
     async session({ session, token }) {
-      session.user.id = token.sub!;
+      // Pasamos los datos del token a la sesión final
+      session.user.id = token.sub!; 
       // @ts-ignore
       session.user.username = token.username || null;
-      // --- LÓGICA AÑADIDA ---
       // @ts-ignore
-      session.user.avatar = token.avatar || null; // Leemos el avatar desde el token
+      session.user.avatar = token.avatar || null; // <-- LÍNEA AÑADIDA
       
+      // Limpiamos los datos de Google que no queremos
       session.user.name = null;
       session.user.image = null;
+      
       return session;
     },
   },

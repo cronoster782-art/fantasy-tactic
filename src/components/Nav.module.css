@@ -1,23 +1,27 @@
 /* src/components/Nav.module.css */
+
 .navContainer {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.85);
     padding: 0.5rem 2rem;
     box-sizing: border-box;
 }
+
 .topRow {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; /* Alinea el menú de perfil a la derecha */
     width: 100%;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .bottomRow {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around; /* Reparte las pestañas como antes */
     align-items: center;
     width: 100%;
 }
+
 .link {
     color: white;
     text-decoration: none;
@@ -28,30 +32,46 @@
     transition: transform 0.2s ease, color 0.2s ease;
     border-bottom: 3px solid transparent;
 }
+
 .link:hover {
     transform: scale(1.1);
     color: yellow;
 }
+
 .active {
     border-bottom: 3px solid yellow;
     font-weight: bold;
 }
+
 .profileMenu {
     position: relative;
 }
+
 .profileButton {
     background: none;
     border: none;
     color: #ccc;
     font-family: var(--font-chalk);
-    font-size: 0.9rem;
+    font-size: 0.9rem; /* Más pequeño */
     cursor: pointer;
     padding: 4px 8px;
     transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
 }
+
 .profileButton:hover {
     color: yellow;
 }
+
+.profileAvatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+}
+
 .dropdown {
     position: absolute;
     top: 100%;
@@ -67,6 +87,7 @@
     flex-direction: column;
     gap: 0.5rem;
 }
+
 .dropdown a, .dropdown button {
     width: 100%;
     text-align: left;
@@ -78,6 +99,7 @@
     font-size: 1rem;
     cursor: pointer;
 }
+
 .dropdown a:hover, .dropdown button:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: yellow;

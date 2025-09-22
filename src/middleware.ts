@@ -1,43 +1,42 @@
 // src/middleware.ts
+
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { auth } from './auth';
 
 export default async function middleware(req: NextRequest) {
-    const session = await auth();
-    const { pathname } = req.nextUrl;
+  console.log(`--- MIDDLEWARE EJECUTÁNDOSE ---`);
+  console.log(`Ruta solicitada: ${req.nextUrl.pathname}`);
 
-    const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/create-profile');
+  const session = await auth();
+  
+  console.log('Sesión encontrada:', session ? `Usuario ${session.user?.email}` : 'null');
 
-    // 1. Si el usuario NO ha iniciado sesión y no va a una página de login/creación...
-    if (!session && !isAuthPage) {
-        // ...lo redirigimos a /login.
-        return NextResponse.redirect(new URL('/login', req.url));
-    }
+  // Si el usuario no tiene sesión y la página NO es /signin, redirigimos.
+  if (!session && req.nextUrl.pathname !== '/signin') {
+    console.log('>>> NO HAY SESIÓN. Redirigiendo a /signin...');
+    return NextResponse.redirect(new URL('/signin', req.url));
+  }
 
-    // 2. Si el usuario SÍ ha iniciado sesión...
-    if (session) {
-        // @ts-ignore - Usamos el `username` que sabemos que existe en la sesión
-        const hasProfile = !!session.user?.username;
+  // Si el usuario SÍ tiene sesión y está en /signin, lo mandamos a la app.
+  if (session && req.nextUrl.pathname === '/signin') {
+      console.log('>>> USUARIO CON SESIÓN EN SIGNIN. Redirigiendo a la app...');
+      return NextResponse.redirect(new URL('/', req.url));
+  }
 
-        // ...pero NO tiene perfil Y NO está en la página de crear perfil...
-        if (!hasProfile && pathname !== '/create-profile') {
-            // ...lo forzamos a ir a /create-profile.
-            return NextResponse.redirect(new URL('/create-profile', req.url));
-        }
-        
-        // ...y si SÍ tiene perfil pero intenta ir a las páginas de login/creación...
-        if (hasProfile && isAuthPage) {
-            // ...lo mandamos a la página de inicio.
-            return NextResponse.redirect(new URL('/', req.url));
-        }
-    }
-
-    return NextResponse.next();
+  console.log('>>> ACCESO PERMITIDO. Dejando pasar.');
+  return NextResponse.next();
 }
 
 export const config = {
-    matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico).*)',
-    ],
+  matcher: [
+    /*
+     * Coincide con todas las rutas de solicitud excepto las que comienzan con:
+     * - api (rutas API)
+     * - _next/static (archivos estáticos)
+     * - _next/image (archivos de optimización de imágenes)
+     * - favicon.ico (archivo de favicon)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
 };

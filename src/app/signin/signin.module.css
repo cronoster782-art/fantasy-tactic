@@ -1,12 +1,10 @@
-/* src/app/login/login.module.css */
-
 .main {
-    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
+    align-items: flex-start; /* Alinear arriba */
+    flex: 1;
+    padding-top: 20vh;      /* Empujar hacia abajo un 20% de la altura de la pantalla */
+    box-sizing: border-box; /* Buena práctica para que el padding no cause problemas */
     background: url('/pizarra.jpg') no-repeat center center fixed;
     background-size: cover;
 }
@@ -18,11 +16,6 @@
     text-align: center;
     width: 100%;
     max-width: 400px;
-}
-
-.card h1 {
-    margin-top: 0;
-    margin-bottom: 2rem;
 }
 
 .googleButton {
@@ -42,9 +35,4 @@
 
 .googleButton:hover {
     background-color: #357ae8;
-}
-
-.googleButton svg {
-    width: 24px;
-    height: 24px;
 }

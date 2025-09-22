@@ -11,8 +11,7 @@ declare module "next-auth" {
     user: {
       id: string;
       username?: string | null;
-      // --- LÍNEA AÑADIDA ---
-      avatar?: string | null; // Añadimos el campo para el avatar
+      avatar?: string | null; // <-- LÍNEA AÑADIDA
     } & DefaultSession["user"];
   }
 }

@@ -76,31 +76,38 @@ export default function EnfrentamientoPage() {
     const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
-        if (isNaN(matchId)) {
-            return;
-        }
+        const loadMatchData = async () => {
+            if (isNaN(matchId)) {
+                setIsLoading(false);
+                return;
+            }
 
-        const foundMatch = MATCHES.find(m => m.id === matchId);
+            const foundMatch = MATCHES.find(m => m.id === matchId);
+            if (!foundMatch) {
+                setIsLoading(false);
+                return;
+            }
 
-        if (!foundMatch) {
+            const rosterLocal = getTeamRoster(foundMatch.home);
+            const rosterVisitante = getTeamRoster(foundMatch.away);
+
+            // Filtrar nulls antes de mapear y añadir liveScore (simulado)
+            const localWithScores: LivePlayer[] = (rosterLocal.lineup.filter((p): p is Jugador => p !== null))
+                .map(p => ({ ...p, liveScore: Math.floor(Math.random() * 17) - 2 }));
+
+            const rivalWithScores: LivePlayer[] = (rosterVisitante.lineup.filter((p): p is Jugador => p !== null))
+                .map(p => ({ ...p, liveScore: Math.floor(Math.random() * 17) - 2 }));
+
+            setMatch(foundMatch);
+            setEquipoLocal(localWithScores);
+            setEquipoVisitante(rivalWithScores);
+            setLocalFormation(rosterLocal.formation);
+            setVisitorFormation(rosterVisitante.formation);
             setIsLoading(false);
-            return;
-        }
-
-        const rosterLocal = getTeamRoster(foundMatch.home);
-        const rosterVisitante = getTeamRoster(foundMatch.away);
-        
-        const localWithScores = rosterLocal.lineup.map(p => ({ ...p, liveScore: Math.floor(Math.random() * 17) - 2 }));
-        const rivalWithScores = rosterVisitante.lineup.map(p => ({ ...p, liveScore: Math.floor(Math.random() * 17) - 2 }));
-
-        setMatch(foundMatch);
-        setEquipoLocal(localWithScores);
-        setEquipoVisitante(rivalWithScores);
-        setLocalFormation(rosterLocal.formation);
-        setVisitorFormation(rosterVisitante.formation);
-        setIsLoading(false);
-
+        };
+        loadMatchData();
     }, [matchId]);
+
 
     if (isLoading) {
         return (

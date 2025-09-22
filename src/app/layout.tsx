@@ -1,45 +1,24 @@
-// src/app/layout.tsx
+// src/app/(auth)/layout.tsx
 
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import localFont from "next/font/local";
-import "./globals.css";
-import ClientLayoutWrapper from "./ClientLayoutWrapper";
+import React from "react";
 
-const chalkFont = localFont({
-    src: "../fonts/Chalkboy.woff2",
-    display: "swap",
-    variable: "--font-chalk",
-});
-
-const poppins = Poppins({
-    subsets: ["latin"],
-    weight: ["400", "500", "700"],
-    variable: "--font-poppins",
-});
-
-export const metadata: Metadata = {
-  title: "Fantasy Tactic",
-  description: "Tu liga de fútbol fantasy.",
-};
-
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-    const bodyClassName = `${chalkFont.variable} ${poppins.variable}`;
-
-    return (
-        <html lang="es">
-            <body className={bodyClassName}>
-                {/* La clave está en este div que envuelve todo */}
-                <div className="app-container">
-                    <ClientLayoutWrapper>
-                        {children}
-                    </ClientLayoutWrapper>
-                </div>
-            </body>
-        </html>
-    );
+  return (
+    // Creamos un contenedor que ocupa toda la pantalla
+    // y le aplicamos el fondo de pizarra directamente aquí.
+    <div style={{
+        minHeight: '100vh',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: "url('/pizarra.jpg') no-repeat center center fixed",
+        backgroundSize: 'cover',
+    }}>
+        {children}
+    </div>
+  );
 }

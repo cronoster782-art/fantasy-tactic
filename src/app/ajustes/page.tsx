@@ -40,7 +40,7 @@ export default function AjustesPage() {
                     height={100}
                     className={styles.avatarPreview}
                     // onError para evitar errores si la URL es inválida
-                    onError={(e) => { e.currentTarget.src = '/logo-app.png'; }}
+                    onError={(e) => { e.currentTarget.src = '/logo-fantasy-tactic.png'; }}
                 />
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="avatar">URL de la imagen de perfil:</label>
