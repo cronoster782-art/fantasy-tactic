@@ -1,0 +1,50 @@
+/* src/app/login/login.module.css */
+
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: url('/pizarra.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 12px;
+    padding: 2rem 3rem;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.card h1 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.googleButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    background-color: #4285F4;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.googleButton:hover {
+    background-color: #357ae8;
+}
+
+.googleButton svg {
+    width: 24px;
+    height: 24px;
+}

@@ -1,20 +1,20 @@
 /* src/app/enfrentamiento/[id]/enfrentamiento.module.css */
 
 .main {
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Alinea arriba */
-  min-height: 80vh;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
 }
 
 .card {
-  background: rgba(0, 0, 0, 0.85);
-  border-radius: 12px;
-  padding: 1.5rem;
-  width: 100%;
-  max-width: 1600px; /* Hacemos el contenedor más ancho */
-  box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 1600px;
+    box-sizing: border-box;
 }
 
 .header {
@@ -36,43 +36,74 @@
     font-weight: bold;
 }
 
-/* === NUEVO DISEÑO POR ZONAS === */
-
 .enfrentamientoContainer {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .zonaEnfrentamiento {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/pizarra.jpg');
-    background-size: cover;
     border-radius: 10px;
     padding: 1rem;
-    border: 3px solid rgba(255, 255, 255, 0.5);
-    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+    /* Clave: El borde ahora es transparente para dejar espacio al gradiente */
+    border: 5px solid transparent;
+    border-image-slice: 1; /* Necesario para que la imagen de borde funcione */
+    transition: all 0.5s ease-in-out;
+    position: relative;
 }
+
+.zonaDefensa, .zonaMedio, .zonaAtaque {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/campo.jpg');
+    background-size: cover;
+}
+.zonaAtaque { background-position: top center; }
+.zonaMedio { background-position: center center; }
+.zonaDefensa { background-position: bottom center; }
+
+/* --- INICIO DE CAMBIOS EN LOS BORDES --- */
+/* El color de la izquierda es para el LOCAL, el de la derecha para el VISITANTE */
+.localGana {
+    border-image-source: linear-gradient(to right, #5cb85c 50%, #d9534f 50%);
+}
+
+.visitanteGana {
+    border-image-source: linear-gradient(to right, #d9534f 50%, #5cb85c 50%);
+}
+
+.empate {
+    border-image-source: linear-gradient(to right, #f0ad4e 50%, #f0ad4e 50%);
+}
+/* --- FIN DE CAMBIOS EN LOS BORDES --- */
 
 .equipoZona {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    flex: 1; /* Ocupa el espacio disponible */
+    gap: 0.75rem;
     justify-content: center;
+    align-items: center;
+    min-height: 120px;
 }
 
 .marcadorZona {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 0 2rem;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0 1rem;
     text-align: center;
 }
-.marcadorZona h3 {
+.marcadorCentro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.marcadorCentro h3 {
     margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    white-space: nowrap;
 }
 .ventajaLocal {
     font-size: 0.7rem;
@@ -82,48 +113,72 @@
     border-radius: 4px;
     margin-top: 0.5rem;
 }
-
-/* Colores dinámicos del fondo de la zona */
-.neutral {
-    background-color: rgba(60, 60, 150, 0.3); /* Azul por defecto */
-    border-color: rgba(60, 60, 150, 0.8);
+.puntosZona {
+    font-size: 2.5rem;
+    font-weight: bold;
+    min-width: 50px;
+    transition: color 0.5s ease-in-out;
 }
-.ganando {
-    background-color: rgba(40, 120, 40, 0.3); /* Verde */
-    border-color: #5cb85c;
-}
-.empatando {
-    background-color: rgba(180, 160, 50, 0.3); /* Amarillo */
-    border-color: #f0ad4e;
-}
-.perdiendo {
-    background-color: rgba(150, 40, 40, 0.3); /* Rojo */
-    border-color: #d9534f;
-}
-
 
 /* Ficha del jugador */
 .fichaEnfrentamiento {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  color: white;
-  text-align: center;
-  gap: 2px;
-  width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    text-align: center;
+    gap: 2px;
+    width: 60px;
 }
 .fichaNombre {
-  font-size: 0.6rem;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 1px 4px;
-  border-radius: 3px;
-  white-space: nowrap;
+    font-size: 0.6rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 1px 4px;
+    border-radius: 3px;
+    white-space: nowrap;
 }
 .jugadorImagen {
-  border-radius: 50%;
-  border: 2px solid #fff;
-  object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+}
+.puntuacionOverlayCampo {
+    position: absolute;
+    top: -2px;
+    right: -5px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    color: #fff;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
+/* === Colores para Puntuaciones de Zona (TEXTO) === */
+.puntosGanando { color: #5cb85c; }
+.puntosPerdiendo { color: #d9534f; }
+.puntosEmpatando { color: #f0ad4e; }
+
+/* === Colores para Puntuaciones de Ficha (FONDO) === */
+.puntosNegativos { background-color: #d9534f !important; }
+.puntosBajos { background-color: #f0ad4e !important; color: #000 !important; }
+.puntosMedios { background-color: #5cb85c !important; }
+.puntosAltos { background-color: #337ab7 !important; }
+.noJugado { background-color: rgba(0, 0, 0, 0.8) !important; color: #fff !important; }.headerTeam {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.formationDisplay {
+    font-size: 1.2rem;
+    color: #ccc;
+    font-weight: normal;
+}

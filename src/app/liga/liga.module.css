@@ -1,111 +1,125 @@
 /* src/app/liga/liga.module.css */
 
 .main {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 }
 
 .card {
-  background: rgba(0, 0, 0, 0.85);
-  border-radius: 12px;
-  padding: 16px;
-  width: 90%;
-  max-width: 1000px;
-  box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 12px;
+    padding: 16px;
+    width: 90%;
+    max-width: 1000px;
+    box-sizing: border-box;
 }
 
-/* === ESTILOS ACTUALIZADOS Y NUEVOS === */
 .jornada-header {
-  display: flex;
-  justify-content: center; /* Centra el título */
-  align-items: center;
-  margin-bottom: 1rem;
-  position: relative; /* Para posicionar los botones */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
 }
 
 .jornada-header h2 {
-  margin: 0;
+    margin: 0;
 }
 
-/* Posicionamos los botones a los lados */
 .jornada-header button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  
-  /* Eliminamos estilos de botón innecesarios */
-  background: transparent;
-  border: none;
-  font-size: 2rem; /* Hacemos las flechas más grandes */
-  padding: 0 20px;
-  cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    padding: 0 20px;
+    cursor: pointer;
 }
 
 .jornada-header button:first-child {
-  left: 0;
+    left: 0;
 }
 
 .jornada-header button:last-child {
-  right: 0;
+    right: 0;
 }
 
-/* Nueva clase para la celda del resultado */
 .resultadoCell {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px; /* Pequeño espacio entre resultado y botón */
+    gap: 4px;
 }
 
 .enJuegoBtn {
-  background: none; /* Quitamos el fondo */
-  color: #5cb85c; /* Color verde para la fuente */
-  padding: 2px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: bold;
-  transition: transform 0.2s;
+    background: none;
+    color: #5cb85c;
+    padding: 2px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: transform 0.2s;
 }
 .enJuegoBtn:hover {
-  transform: scale(1.1); /* Efecto al pasar el ratón */
+    transform: scale(1.1);
+}
+
+/* === ESTADOS DE PARTIDO (PLANIFICACIÓN) === */
+.provisionalScore {
+    color: #f0ad4e;
+    font-weight: bold;
+}
+
+.finalizadoBtn {
+    color: #c9302c; /* Rojo */
+    padding: 2px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.finalizadoBtn:hover {
+    transform: scale(1.1);
 }
 /* ======================================= */
 
 .table-container {
-  width: 100%;
-  overflow-x: auto;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .table th, 
 .table td {
-  color: #fff;
-  padding: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  text-align: center;
-  font-size: 0.85rem;
+    color: #fff;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    font-size: 0.85rem;
 }
 
 .pos-1 td {
-  color: rgb(238, 221, 128);
-  font-weight: bold;
+    color: rgb(238, 221, 128) !important;
+    font-weight: bold;
 }
 
 .pos-azul td {
-  color: #89cce9;
-  font-weight: bold;
+    color: #89cce9 !important;
+    font-weight: bold;
 }
 
 .pos-descenso td {
-  color: #e7796d;
-  font-weight: bold;
+    color: #e7796d !important;
+    font-weight: bold;
 }
-

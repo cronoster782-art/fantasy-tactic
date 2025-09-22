@@ -1,67 +1,72 @@
 // src/teams.ts
-// VERSIÓN ACTUALIZADA CON TU EQUIPO "NARANJITOS F.C." INCLUIDO EN LA LIGA
+// VERSIÓN ACTUALIZADA: Se incluye un calendario completo de 38 jornadas.
 
-export const TEAMS = [
-  { id: 1, name: "Dragones FC", logo: "/escudos/dragones_fc.png", primaryColor: "#CE2525", secondaryColor: "#FFFFFF", played: 19, won: 14, drawn: 3, lost: 2, goals: 38, points: 45 },
-  { id: 2, name: "Leones United", logo: "/escudos/leones_united.png", primaryColor: "#AC0D15", secondaryColor: "#062243", played: 19, won: 13, drawn: 3, lost: 3, goals: 35, points: 42 },
-  { id: 3, name: "Tiburones CF", logo: "/escudos/tiburones_cf.png", primaryColor: "#E7373E", secondaryColor: "#FFFFFF", played: 19, won: 12, drawn: 3, lost: 4, goals: 33, points: 39 },
-  { id: 4, name: "Águilas Rojas", logo: "/escudos/aguilas_rojas.png", primaryColor: "#A60D1E", secondaryColor: "#FFFFFF", played: 19, won: 11, drawn: 3, lost: 5, goals: 30, points: 36 },
-  { id: 5, name: "Lobos del Norte", logo: "/escudos/lobos_norte.png", primaryColor: "#0055A4", secondaryColor: "#EF3340", played: 19, won: 10, drawn: 4, lost: 5, goals: 28, points: 34 },
-  { id: 6, name: "Panteras Doradas", logo: "/escudos/panteras_doradas.png", primaryColor: "#FFCD00", secondaryColor: "#000000", played: 19, won: 9, drawn: 5, lost: 5, goals: 27, points: 32 },
-  { id: 7, name: "Guerreros Azules", logo: "/escudos/guerreros_azules.png", primaryColor: "#00AEEF", secondaryColor: "#FFFFFF", played: 19, won: 9, drawn: 3, lost: 7, goals: 25, points: 30 },
-  { id: 8, name: "Halcones Verdes", logo: "/escudos/halcones_verdes.png", primaryColor: "#00A651", secondaryColor: "#FFFFFF", played: 19, won: 8, drawn: 4, lost: 7, goals: 24, points: 28 },
-  { id: 9, name: "Toros Bravos", logo: "/escudos/toros_bravos.png", primaryColor: "#DA291C", secondaryColor: "#000000", played: 19, won: 8, drawn: 3, lost: 8, goals: 23, points: 27 },
-  { id: 10, name: "Piratas del Sur", logo: "/escudos/piratas_sur.png", primaryColor: "#000000", secondaryColor: "#FFFFFF", played: 19, won: 7, drawn: 4, lost: 8, goals: 22, points: 25 },
-  { id: 11, name: "Cóndores FC", logo: "/escudos/condores_fc.png", primaryColor: "#6CACE4", secondaryColor: "#FFFFFF", played: 19, won: 7, drawn: 3, lost: 9, goals: 21, points: 24 },
-  { id: 12, name: "Tigres Blancos", logo: "/escudos/tigres_blancos.png", primaryColor: "#FFFFFF", secondaryColor: "#000000", played: 19, won: 6, drawn: 4, lost: 9, goals: 20, points: 22 },
-  { id: 13, name: "Osos Negros", logo: "/escudos/osos_negros.png", primaryColor: "#009B48", secondaryColor: "#FFFFFF", played: 19, won: 6, drawn: 2, lost: 11, goals: 18, points: 20 },
-  { id: 14, name: "Linces Rojos", logo: "/escudos/linces_rojos.png", primaryColor: "#ED1C24", secondaryColor: "#FFFFFF", played: 19, won: 5, drawn: 3, lost: 11, goals: 16, points: 18 },
-  { id: 15, name: "Delfines Celestes", logo: "/escudos/delfines_celestes.png", primaryColor: "#00B2A9", secondaryColor: "#FFFFFF", played: 19, won: 4, drawn: 4, lost: 11, goals: 15, points: 16 },
-  { id: 16, name: "Búhos Nocturnos", logo: "/escudos/buhos_nocturnos.png", primaryColor: "#7B2A88", secondaryColor: "#FFFFFF", played: 19, won: 4, drawn: 2, lost: 13, goals: 13, points: 14 },
-  { id: 17, name: "Pumas Salvajes", logo: "/escudos/pumas_salvajes.png", primaryColor: "#EC8B00", secondaryColor: "#000000", played: 19, won: 3, drawn: 3, lost: 13, goals: 12, points: 12 },
-  { id: 18, name: "Zorros Plateados", logo: "/escudos/zorros_plateados.png", primaryColor: "#D2D2D2", secondaryColor: "#000000", played: 19, won: 3, drawn: 1, lost: 15, goals: 10, points: 10 },
-  // CAMBIO: Reemplazamos "Jaguares Urbanos" por tu equipo
-  { id: 19, name: "Naranjitos F.C.", logo: "/escudos/naranjitos_fc.png", primaryColor: "#FFA500", secondaryColor: "#FFFFFF", played: 19, won: 2, drawn: 2, lost: 15, goals: 8, points: 8 },
-  { id: 20, name: "Caballeros de Acero", logo: "/escudos/caballeros_acero.png", primaryColor: "#6A7B8B", secondaryColor: "#FFFFFF", played: 19, won: 1, drawn: 3, lost: 15, goals: 6, points: 6 },
+export type Team = {
+  id: number;
+  apiId: number;
+  name: string;
+  logo: string;
+  primaryColor: string;
+  secondaryColor: string;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  goals: number;
+  points: number;
+};
+
+export const TEAMS: Team[] = [
+  { id: 1, apiId: 548, name: "Dragones FC", logo: "/escudos/dragones_fc.png", primaryColor: "#CE2525", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 2, apiId: 531, name: "Leones United", logo: "/escudos/leones_united.png", primaryColor: "#AC0D15", secondaryColor: "#062243", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 3, apiId: 533, name: "Tiburones CF", logo: "/escudos/tiburones_cf.png", primaryColor: "#E7373E", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 4, apiId: 546, name: "Águilas Rojas", logo: "/escudos/aguilas_rojas.png", primaryColor: "#A60D1E", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 5, apiId: 542, name: "Lobos del Norte", logo: "/escudos/lobos_norte.png", primaryColor: "#0055A4", secondaryColor: "#EF3340", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 6, apiId: 538, name: "Panteras Doradas", logo: "/escudos/panteras_doradas.png", primaryColor: "#FFCD00", secondaryColor: "#000000", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 7, apiId: 530, name: "Guerreros Azules", logo: "/escudos/guerreros_azules.png", primaryColor: "#00AEEF", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 8, apiId: 724, name: "Halcones Verdes", logo: "/escudos/halcones_verdes.png", primaryColor: "#00A651", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 9, apiId: 547, name: "Toros Bravos", logo: "/escudos/toros_bravos.png", primaryColor: "#DA291C", secondaryColor: "#000000", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 10, apiId: 540, name: "Piratas del Sur", logo: "/escudos/piratas_sur.png", primaryColor: "#000000", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 11, apiId: 727, name: "Cóndores FC", logo: "/escudos/condores_fc.png", primaryColor: "#6CACE4", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 12, apiId: 728, name: "Tigres Blancos", logo: "/escudos/tigres_blancos.png", primaryColor: "#FFFFFF", secondaryColor: "#000000", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 13, apiId: 797, name: "Osos Negros", logo: "/escudos/osos_negros.png", primaryColor: "#009B48", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 14, apiId: 720, name: "Linces Rojos", logo: "/escudos/linces_rojos.png", primaryColor: "#ED1C24", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 15, apiId: 532, name: "Delfines Celestes", logo: "/escudos/delfines_celestes.png", primaryColor: "#00B2A9", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 16, apiId: 550, name: "Búhos Nocturnos", logo: "/escudos/buhos_nocturnos.png", primaryColor: "#7B2A88", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 17, apiId: 545, name: "Pumas Salvajes", logo: "/escudos/pumas_salvajes.png", primaryColor: "#EC8B00", secondaryColor: "#000000", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 18, apiId: 534, name: "Zorros Plateados", logo: "/escudos/zorros_plateados.png", primaryColor: "#D2D2D2", secondaryColor: "#000000", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 19, apiId: 543, name: "Naranjitos F.C.", logo: "/escudos/naranjitos_fc.png", primaryColor: "#FFA500", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
+  { id: 20, apiId: 723, name: "Caballeros de Acero", logo: "/escudos/caballeros_acero.png", primaryColor: "#6A7B8B", secondaryColor: "#FFFFFF", played: 0, won: 0, drawn: 0, lost: 0, goals: 0, points: 0 },
 ];
 
-export const MATCHES = [
-  // Jornada 1
-  { id: 1, home: "Dragones FC", away: "Leones United", score: " - ", jornada: 1 },
-  { id: 2, home: "Tiburones CF", away: "Águilas Rojas", score: " - ", jornada: 1 },
-  { id: 3, home: "Lobos del Norte", away: "Panteras Doradas", score: " - ", jornada: 1 },
-  { id: 4, home: "Guerreros Azules", away: "Halcones Verdes", score: " - ", jornada: 1 },
-  { id: 5, home: "Toros Bravos", away: "Piratas del Sur", score: " - ", jornada: 1 },
-  { id: 6, home: "Cóndores FC", away: "Tigres Blancos", score: " - ", jornada: 1 },
-  { id: 7, home: "Osos Negros", away: "Linces Rojos", score: " - ", jornada: 1 },
-  { id: 8, home: "Delfines Celestes", away: "Búhos Nocturnos", score: " - ", jornada: 1 },
-  { id: 9, home: "Pumas Salvajes", away: "Zorros Plateados", score: " - ", jornada: 1 },
-  { id: 10, home: "Naranjitos F.C.", away: "Caballeros de Acero", score: " - ", jornada: 1 },
+// Función para generar el calendario completo
+const generateFixtures = (teams: Team[]) => {
+    const fixtures = [];
+    const numTeams = teams.length;
+    let matchId = 1;
 
-  // Jornada 2
-  { id: 11, home: "Leones United", away: "Caballeros de Acero", score: " - ", jornada: 2 },
-  { id: 12, home: "Zorros Plateados", away: "Naranjitos F.C.", score: " - ", jornada: 2 },
-  { id: 13, home: "Búhos Nocturnos", away: "Pumas Salvajes", score: " - ", jornada: 2 },
-  { id: 14, home: "Linces Rojos", away: "Delfines Celestes", score: " - ", jornada: 2 },
-  { id: 15, home: "Tigres Blancos", away: "Osos Negros", score: " - ", jornada: 2 },
-  { id: 16, home: "Piratas del Sur", away: "Cóndores FC", score: " - ", jornada: 2 },
-  { id: 17, home: "Halcones Verdes", away: "Toros Bravos", score: " - ", jornada: 2 },
-  { id: 18, home: "Panteras Doradas", away: "Guerreros Azules", score: " - ", jornada: 2 },
-  { id: 19, home: "Águilas Rojas", away: "Lobos del Norte", score: " - ", jornada: 2 },
-  { id: 20, home: "Dragones FC", away: "Tiburones CF", score: " - ", jornada: 2 },
+    for (let round = 0; round < (numTeams - 1) * 2; round++) {
+        const jornada = round + 1;
+        for (let i = 0; i < numTeams / 2; i++) {
+            const homeIndex = (round + i) % (numTeams - 1);
+            let awayIndex = (numTeams - 1 - i + round) % (numTeams - 1);
+            if (i === 0) {
+                awayIndex = numTeams - 1;
+            }
 
-  // Jornada 3
-  { id: 21, home: "Tiburones CF", away: "Leones United", score: " - ", jornada: 3 },
-  { id: 22, home: "Lobos del Norte", away: "Dragones FC", score: " - ", jornada: 3 },
-  { id: 23, home: "Guerreros Azules", away: "Águilas Rojas", score: " - ", jornada: 3 },
-  { id: 24, home: "Toros Bravos", away: "Panteras Doradas", score: " - ", jornada: 3 },
-  { id: 25, home: "Cóndores FC", away: "Halcones Verdes", score: " - ", jornada: 3 },
-  { id: 26, home: "Osos Negros", away: "Piratas del Sur", score: " - ", jornada: 3 },
-  { id: 27, home: "Delfines Celestes", away: "Tigres Blancos", score: " - ", jornada: 3 },
-  { id: 28, home: "Pumas Salvajes", away: "Linces Rojos", score: " - ", jornada: 3 },
-  { id: 29, home: "Naranjitos F.C.", away: "Búhos Nocturnos", score: " - ", jornada: 3 },
-  { id: 30, home: "Caballeros de Acero", away: "Zorros Plateados", score: " - ", jornada: 3 },
-];
+            const homeTeam = teams[homeIndex];
+            const awayTeam = teams[awayIndex];
+
+            if (jornada <= numTeams - 1) {
+                 fixtures.push({ id: matchId++, home: homeTeam.name, away: awayTeam.name, score: " - ", jornada, status: 'pendiente' as const });
+            } else {
+                 fixtures.push({ id: matchId++, home: awayTeam.name, away: homeTeam.name, score: " - ", jornada, status: 'pendiente' as const });
+            }
+        }
+    }
+    return fixtures;
+};
 
 
+export const MATCHES = generateFixtures(TEAMS);
 

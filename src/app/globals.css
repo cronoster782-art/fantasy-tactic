@@ -6,11 +6,22 @@
   --font-chalk: 'Comic Sans MS', cursive;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: var(--font-chalk), sans-serif;
+  padding: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   background: url('/pizarra.jpg') no-repeat center center fixed;
   background-size: cover;
+  font-family: var(--font-chalk), sans-serif;
   color: #fff;
 }
 
@@ -99,4 +110,6 @@ button:hover {
   /* 2. Aplicamos la animación de fundido. */
   animation: smoothFadeIn 0.4s ease-in-out forwards;
 }
-
+nextjs-portal {
+  display: none !important;
+}

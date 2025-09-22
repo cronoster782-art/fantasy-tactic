@@ -1,49 +1,45 @@
-"use client";
+// src/app/layout.tsx
 
-import "./globals.css";
+import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
-import { usePathname } from 'next/navigation';
+import "./globals.css";
+import ClientLayoutWrapper from "./ClientLayoutWrapper";
 
 const chalkFont = localFont({
-  src: "../fonts/Chalkboy.woff2",
-  display: "swap",
-  variable: "--font-chalk",
+    src: "../fonts/Chalkboy.woff2",
+    display: "swap",
+    variable: "--font-chalk",
 });
 
 const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-poppins",
+    subsets: ["latin"],
+    weight: ["400", "500", "700"],
+    variable: "--font-poppins",
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const bodyClassName = `${chalkFont.variable} ${poppins.variable}`;
+export const metadata: Metadata = {
+  title: "Fantasy Tactic",
+  description: "Tu liga de fútbol fantasy.",
+};
 
-  // Esta 'key' es un truco para que la animación se repita cada vez que cambias de página
-  const animationKey = pathname; 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+    const bodyClassName = `${chalkFont.variable} ${poppins.variable}`;
 
-  return (
-    <html lang="es">
-      <body className={bodyClassName}>
-        {pathname !== '/' && (
-          <nav>
-            <a href="/liga">Liga</a>
-            <a href="/equipo">Equipo</a>
-            <a href="/fichajes">Fichajes</a>
-            <a href="/rival">Rival</a>
-          </nav>
-        )}
-        
-        {/* CAMBIO: Envolvemos cada página en este div.
-            Si no es la página del logo, le aplica la clase de animación.
-        */}
-        <div key={animationKey} className={pathname !== '/' ? 'page-container-animated' : ''}>
-          {children}
-        </div>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="es">
+            <body className={bodyClassName}>
+                {/* La clave está en este div que envuelve todo */}
+                <div className="app-container">
+                    <ClientLayoutWrapper>
+                        {children}
+                    </ClientLayoutWrapper>
+                </div>
+            </body>
+        </html>
+    );
 }
-
