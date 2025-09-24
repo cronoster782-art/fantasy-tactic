@@ -21,11 +21,16 @@ export default function Nav() {
                 {session && (
                     <div className={styles.profileMenu}>
                         <button 
-                            className={styles.profileButton}
-                            onClick={() => setIsDropdownOpen(prev => !prev)}
-                        >
-                            {username || "Mi Perfil"}
-                        </button>
+    className={styles.profileButton}
+    onClick={() => setIsDropdownOpen(prev => !prev)}
+>
+    <img
+        src="/logo-fantasy-tactic.png" // La ruta a tu logo en la carpeta /public
+        alt="Logo de perfil"
+        className={styles.profileImage} // Una nueva clase para darle estilo
+    />
+    <span>{username || "Mi Perfil"}</span>
+</button>
                         {isDropdownOpen && (
                             <div className={styles.dropdown}>
                                 <Link href="/ajustes">Ajustes</Link>

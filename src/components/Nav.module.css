@@ -1,84 +1,147 @@
-/* src/components/Nav.module.css */
+/* Contenedor Principal de la Navegación */
 .navContainer {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    padding: 0.5rem 2rem;
-    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.85); /* Fondo oscuro semitransparente */
+    font-family: var(--font-chalk);
 }
+
+/* --- Fila Superior (Perfil y Equipo) --- */
+
 .topRow {
     display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.bottomRow {
-    display: flex;
-    justify-content: space-around;
+    justify-content: space-between; /* Clave para centrar el elemento del medio */
     align-items: center;
     width: 100%;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.link {
+
+/* Lado izquierdo: Un espaciador para equilibrar el diseño */
+.leftSide {
+    width: 150px; /* Ajusta este ancho para que sea similar al del menú de perfil */
+    flex-shrink: 0;
+}
+
+/* --- Elementos del Centro (Equipo) --- */
+
+.teamInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.teamShieldImage {
+    width: 48px;
+    height: 48px;
+    object-fit: contain; /* Para que el escudo no se deforme */
+}
+
+.teamName {
+    font-size: 1.1rem;
     color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-family: var(--font-chalk);
-    text-align: center;
-    padding: 10px 16px;
-    transition: transform 0.2s ease, color 0.2s ease;
-    border-bottom: 3px solid transparent;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
-.link:hover {
-    transform: scale(1.1);
-    color: yellow;
-}
-.active {
-    border-bottom: 3px solid yellow;
-    font-weight: bold;
-}
+
+/* --- Lado Derecho (Menú de Perfil) --- */
+
 .profileMenu {
     position: relative;
+    width: 150px; /* Ajusta este ancho según necesites */
+    display: flex;
+    justify-content: flex-end;
 }
+
 .profileButton {
     background: none;
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
     color: #ccc;
     font-family: var(--font-chalk);
     font-size: 0.9rem;
     cursor: pointer;
-    padding: 4px 8px;
-    transition: color 0.2s ease;
+    padding: 4px 12px;
+    transition: all 0.2s ease;
+    
+    /* Para alinear la imagen y el texto dentro del botón */
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+
 .profileButton:hover {
     color: yellow;
+    border-color: yellow;
 }
+
+.profileImage {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Menú desplegable */
 .dropdown {
     position: absolute;
-    top: 100%;
+    top: 110%;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.95);
-    border: 1px solid #fff;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    width: 150px;
-    z-index: 1001;
+    padding: 8px;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 8px;
+    width: 150px;
 }
+
 .dropdown a, .dropdown button {
-    width: 100%;
-    text-align: left;
+    color: white;
+    text-decoration: none;
     background: none;
     border: none;
-    color: white;
-    padding: 0.5rem;
+    text-align: left;
+    padding: 8px;
     border-radius: 4px;
-    font-size: 1rem;
     cursor: pointer;
+    font-family: var(--font-chalk);
 }
+
 .dropdown a:hover, .dropdown button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+/* --- Fila Inferior (Links de Navegación) --- */
+
+.bottomRow {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 16px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.link:hover {
+    transform: scale(1.1);
+    color: yellow;
+}
+
+.link.active {
+    border-bottom: 3px solid yellow;
+    font-weight: bold;
     color: yellow;
 }
