@@ -33,7 +33,7 @@ export default function AjustesPage() {
         <main className={`${styles.main} page-container-animated`}>
             <div className={styles.card}>
                 <h2>Ajustes de Perfil</h2>
-                <Image
+                <img
                     src={currentAvatar}
                     alt="Avatar actual"
                     width={100}

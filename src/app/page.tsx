@@ -19,13 +19,11 @@ export default function HomePage() {
   return (
     <main className={styles.container}>
       <div className={styles.logoWrapper}>
-        <Image
+        <img
           src="/logo-fantasy-tactic.png"
           alt="Logo de Fantasy Tactic"
           width={250}
           height={250}
-          priority
-          placeholder="empty"
           style={{ background: 'transparent' }}
         />
       </div>

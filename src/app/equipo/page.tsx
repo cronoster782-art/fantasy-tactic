@@ -23,7 +23,7 @@ function EstadoIcon({ estado }: { estado: Jugador['estado'] }) {
 function FichaEnCampo({ jugador, gridArea, onClick, isSelected }: { jugador: Jugador, gridArea: string, onClick: () => void, isSelected: boolean }) {
     return (
         <div className={`${styles.fichaEnCampo} ${isSelected ? styles.selected : ''}`} style={{ gridArea }} onClick={onClick}>
-            <Image src={jugador.img} alt={jugador.nombre} width={50} height={50} className={styles.jugadorImagen} />
+            <img src={jugador.img} alt={jugador.nombre} width={50} height={50} className={styles.jugadorImagen} />
             <div className={styles.puntuacionOverlayCampo}>-</div>
             <EstadoIcon estado={jugador.estado} />
             <span className={styles.fichaNombre}>{jugador.nombre}</span>
@@ -34,7 +34,7 @@ function FichaEnCampo({ jugador, gridArea, onClick, isSelected }: { jugador: Jug
 function SuplenteCard({ jugador, onClick, isHighlighted }: { jugador: Jugador, onClick: () => void, isHighlighted: boolean }) {
     return (
         <div className={`${styles.suplenteCard} ${isHighlighted ? styles.highlighted : ''}`} onClick={onClick}>
-            <Image src={jugador.img} alt={jugador.nombre} width={40} height={40} className={styles.jugadorImagen} />
+            <img src={jugador.img} alt={jugador.nombre} width={40} height={40} className={styles.jugadorImagen} />
             <div className={styles.suplenteInfo}>
                 <span className={styles.suplenteNombre}>{jugador.nombre}</span>
                 <span className={styles.suplentePosicion}>{jugador.posicion}</span>
@@ -61,7 +61,7 @@ function JugadorCard({ jugador, onSellClick }: { jugador: Jugador; onSellClick: 
         <div className={styles.jugadorCard}>
             <div className={styles.posicionBadge}>{jugador.posicion}</div>
             <div className={styles.jugadorImagenContainer}>
-                <Image src={jugador.img} alt={jugador.nombre} width={70} height={70} className={styles.jugadorImagen} />
+                <img src={jugador.img} alt={jugador.nombre} width={70} height={70} className={styles.jugadorImagen} />
                 <div className={styles.puntuacionOverlay}>-</div>
                 <EstadoIcon estado={jugador.estado} />
             </div>
