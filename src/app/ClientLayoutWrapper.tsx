@@ -11,7 +11,7 @@ import Nav from '@/components/Nav';
 export default function ClientLayoutWrapper({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
 
-    const noNavRoutes = ['/login', '/', '/create-profile'];
+    const noNavRoutes = ['/login', '/', '/create-profile', '/seleccionar-liga', '/configurar-liga'];
     const isNavHiddenPage = noNavRoutes.includes(pathname);
 
     return (

@@ -1,0 +1,328 @@
+/* Contenedor principal */
+.main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('/pizarra.jpg') center/cover no-repeat;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 700px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.container h1 {
+    color: white;
+    font-family: var(--font-chalk);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.container p {
+    color: #ccc;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Secciones */
+.section {
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section h3 {
+    color: white;
+    font-family: var(--font-chalk);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: left;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+/* Grupos de inputs */
+.inputGroup {
+    margin-bottom: 20px;
+}
+
+.inputGroup:last-child {
+    margin-bottom: 0;
+}
+
+.inputGroup label {
+    display: block;
+    color: white;
+    font-family: var(--font-chalk);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Input de texto */
+.input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    font-family: var(--font-chalk);
+    transition: all 0.3s ease;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #2d8659;
+    box-shadow: 0 0 15px rgba(45, 134, 89, 0.3);
+}
+
+.input::placeholder {
+    color: #666;
+    font-style: italic;
+}
+
+/* Texto informativo */
+.infoText {
+    margin-top: 10px;
+    color: #ffeb3b;
+    font-size: 0.85rem;
+    font-style: italic;
+    background: rgba(255, 235, 59, 0.1);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #ffeb3b;
+    text-align: left;
+}
+
+/* Grid de participantes */
+.participantesGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* Fila de opciones */
+.optionsRow {
+    display: flex;
+    gap: 15px;
+}
+
+/* Botones de opción */
+.optionButton {
+    flex: 1;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    font-family: var(--font-chalk);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.optionButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.optionButton.active {
+    background: linear-gradient(135deg, #2d8659, #1a4d3a);
+    border-color: #2d8659;
+    color: white;
+    box-shadow: 0 0 15px rgba(45, 134, 89, 0.4);
+}
+
+/* Opciones de equipo inicial */
+.equipoOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.equipoOption {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.equipoOption:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.equipoOption.active {
+    border-color: #2d8659;
+    background: rgba(45, 134, 89, 0.2);
+    box-shadow: 0 0 20px rgba(45, 134, 89, 0.3);
+}
+
+.equipoIcon {
+    font-size: 2rem;
+    min-width: 60px;
+    text-align: center;
+}
+
+.equipoOption strong {
+    font-family: var(--font-chalk);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.equipoOption p {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin: 0;
+    text-align: left;
+}
+
+/* Botones de acción */
+.actions {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.backButton {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-family: var(--font-chalk);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.backButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+}
+
+.createButton {
+    flex: 1;
+    max-width: 300px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-family: var(--font-chalk);
+    background: linear-gradient(135deg, #2d8659, #1a4d3a);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.createButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(45, 134, 89, 0.4);
+}
+
+.createButton:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.createButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+        max-height: 95vh;
+    }
+    
+    .container h1 {
+        font-size: 2rem;
+    }
+    
+    .participantesGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .optionsRow {
+        flex-direction: column;
+    }
+    
+    .equipoOptions {
+        gap: 10px;
+    }
+    
+    .equipoOption {
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .equipoIcon {
+        font-size: 1.5rem;
+        min-width: 40px;
+    }
+    
+    .actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .createButton {
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .section {
+        padding: 15px;
+    }
+    
+    .container h1 {
+        font-size: 1.8rem;
+    }
+    
+    .participantesGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

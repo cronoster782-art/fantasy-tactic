@@ -16,8 +16,8 @@ export default function CreateProfilePage() {
         // 1. Actualizamos la sesión del usuario con el nuevo nombre
         await update({ username: username });
 
-        // 2. Redirigimos al usuario a la página principal
-        router.push('/');
+        // 2. Redirigimos a seleccionar liga
+        router.push('/seleccionar-liga');
     };
 
     return (

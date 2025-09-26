@@ -113,3 +113,18 @@ button:hover {
 nextjs-portal {
   display: none !important;
 }
+
+/* =================================== */
+/* AJUSTES PARA NAVEGACIÓN VERTICAL */
+/* =================================== */
+
+.content-padding {
+  padding-right: 90px; /* Padding derecho para la navegación vertical */
+}
+
+/* Responsive para la navegación vertical */
+@media (max-width: 768px) {
+  .content-padding {
+    padding-right: 70px;
+  }
+}

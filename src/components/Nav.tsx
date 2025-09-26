@@ -15,37 +15,89 @@ export default function Nav() {
     // @ts-ignore
     const username = session?.user?.username;
 
+    // Obtener el escudo del rival actual (simulado por ahora)
+    const getRivalShield = () => {
+        // Por ahora devolvemos un escudo aleatorio, esto se conectará con la lógica real
+        const escudos = [
+            "/escudos/escudoatindio.png",
+            "/escudos/escudoazulon.png", 
+            "/escudos/escudobabazorro.png",
+            "/escudos/escudobermellon.png"
+        ];
+        return escudos[Math.floor(Math.random() * escudos.length)];
+    };
+
     return (
-        <div className={`${styles.navContainer} fixed-nav`}>
-            <div className={styles.topRow}>
-                {session && (
-                    <div className={styles.profileMenu}>
-                        <button 
-    className={styles.profileButton}
-    onClick={() => setIsDropdownOpen(prev => !prev)}
->
-    <img
-        src="/logo-fantasy-tactic.png" // La ruta a tu logo en la carpeta /public
-        alt="Logo de perfil"
-        className={styles.profileImage} // Una nueva clase para darle estilo
-    />
-    <span>{username || "Mi Perfil"}</span>
-</button>
-                        {isDropdownOpen && (
-                            <div className={styles.dropdown}>
-                                <Link href="/ajustes">Ajustes</Link>
-                                <button onClick={() => signOut()}>Cerrar Sesión</button>
-                            </div>
-                        )}
-                    </div>
-                )}
+        <>
+            {/* Botón de usuario flotante */}
+            {session && (
+                <div className={styles.floatingUserButton}>
+                    <button 
+                        className={styles.profileButton}
+                        onClick={() => setIsDropdownOpen(prev => !prev)}
+                        style={{ 
+                            background: 'none', 
+                            border: 'none', 
+                            padding: 0, 
+                            width: '100%', 
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px'
+                        }}
+                    >
+                        <img
+                            src="/logo-fantasy-tactic.png"
+                            alt="Logo de perfil"
+                            className={styles.floatingProfileImage}
+                        />
+                        <span className={styles.floatingUserName}>
+                            {username || "Mi Perfil"}
+                        </span>
+                    </button>
+                    {isDropdownOpen && (
+                        <div className={styles.floatingDropdown}>
+                            <Link href="/ajustes">Ajustes</Link>
+                            <button onClick={() => signOut()}>Cerrar Sesión</button>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Navegación vertical en el lado derecho */}
+            <div className={styles.verticalNav}>
+                <div className={styles.verticalNavLinks}>
+                    <Link 
+                        href="/liga" 
+                        className={`${styles.navIcon} ${styles.ligaIcon} ${pathname === '/liga' ? styles.active : ''}`}
+                        title="Liga"
+                    />
+                    
+                    <Link 
+                        href="/equipo" 
+                        className={`${styles.navIcon} ${styles.equipoIcon} ${pathname === '/equipo' ? styles.active : ''}`}
+                        title="Equipo"
+                    />
+                    
+                    <Link 
+                        href="/fichajes" 
+                        className={`${styles.navIcon} ${styles.fichajesIcon} ${pathname === '/fichajes' ? styles.active : ''}`}
+                        title="Fichajes"
+                    />
+                    
+                    <Link 
+                        href="/rival" 
+                        className={`${styles.navIcon} ${styles.rivalIcon} ${pathname === '/rival' ? styles.active : ''}`}
+                        title="Rival"
+                    >
+                        <img 
+                            src={getRivalShield()} 
+                            alt="Escudo rival"
+                            className={styles.rivalShield}
+                        />
+                    </Link>
+                </div>
             </div>
-            <div className={styles.bottomRow}>
-                <Link href="/liga" className={`${styles.link} ${pathname === '/liga' ? styles.active : ''}`}>Liga</Link>
-                <Link href="/equipo" className={`${styles.link} ${pathname === '/equipo' ? styles.active : ''}`}>Equipo</Link>
-                <Link href="/fichajes" className={`${styles.link} ${pathname === '/fichajes' ? styles.active : ''}`}>Fichajes</Link>
-                <Link href="/rival" className={`${styles.link} ${pathname === '/rival' ? styles.active : ''}`}>Rival</Link>
-            </div>
-        </div>
+        </>
     );
 }

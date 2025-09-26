@@ -33,7 +33,7 @@
     padding: 12px;
     margin-bottom: 1.5rem;
     font-size: 1.1rem;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(7, 7, 7, 0.138);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     color: white;
@@ -46,9 +46,10 @@
     width: 100%;
     padding: 12px 20px;
     font-size: 1.1rem;
-    border: 2px dashed #fff;
+    border: 2px solid #ffffff77;
+    background-color: rgb(255, 230, 5);
 }
 
 .button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(26, 213, 41);
 }

@@ -9,6 +9,94 @@
     font-family: var(--font-chalk);
 }
 
+/* Navegación Vertical Derecha */
+.verticalNav {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 15px;
+    padding: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* Botón de Usuario Flotante */
+.floatingUserButton {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    padding: 5px 15px 5px 5px;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 60px;
+}
+
+.floatingUserButton:hover {
+    border-color: #ffeb3b;
+    box-shadow: 0 0 20px rgba(255, 235, 59, 0.4);
+    transform: scale(1.05);
+}
+
+.floatingProfileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.floatingUserName {
+    color: white;
+    font-family: var(--font-chalk);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Menú desplegable del usuario flotante */
+.floatingDropdown {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 150px;
+    backdrop-filter: blur(10px);
+}
+
+.floatingDropdown a, .floatingDropdown button {
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-chalk);
+}
+
+.floatingDropdown a:hover, .floatingDropdown button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 /* --- Fila Superior (Perfil y Equipo) --- */
 
 .topRow {
@@ -117,31 +205,188 @@
 }
 
 
-/* --- Fila Inferior (Links de Navegación) --- */
+/* --- Navegación Vertical (Links de Navegación) --- */
 
-.bottomRow {
+.verticalNavLinks {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    gap: 15px;
     align-items: center;
-    padding: 12px 0;
-    background: rgba(0, 0, 0, 0.7);
 }
 
-.link {
+.navIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
     color: white;
     text-decoration: none;
-    font-size: 1.2rem;
-    padding: 10px 16px;
-    transition: transform 0.2s ease, color 0.2s ease;
+    font-size: 1.5rem;
+    padding: 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
 }
 
-.link:hover {
+.navIcon:hover {
     transform: scale(1.1);
-    color: yellow;
+    background-color: rgba(255, 235, 59, 0.2);
+    border-color: #ffeb3b;
+    box-shadow: 0 0 15px rgba(255, 235, 59, 0.3);
 }
 
-.link.active {
-    border-bottom: 3px solid yellow;
+/* Mantener las imágenes de fondo en hover */
+.ligaIcon:hover {
+    background-image: url('/copa-liga.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.equipoIcon:hover {
+    background-image: url('/camiseta-equipo.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.navIcon.active {
+    background-color: rgba(255, 235, 59, 0.3);
+    border-color: #ffeb3b;
+    color: #ffeb3b;
+    box-shadow: 0 0 20px rgba(255, 235, 59, 0.4);
+}
+
+/* Mantener las imágenes de fondo incluso cuando están activas */
+.ligaIcon.active {
+    background-image: url('/copa-liga.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.equipoIcon.active {
+    background-image: url('/camiseta-equipo.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Iconos específicos */
+.ligaIcon {
+    background-image: url('/copa-liga.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.equipoIcon {
+    background-image: url('/camiseta-equipo.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.fichajesIcon {
+    position: relative;
+    overflow: hidden;
+}
+
+.fichajesIcon::before {
+    content: "⇄";
+    font-size: 1.8rem;
     font-weight: bold;
-    color: yellow;
+}
+
+.rivalIcon {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.rivalIcon::before {
+    content: "VS";
+}
+
+.rivalShield {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid white;
+    object-fit: contain;
+}
+
+/* Responsive para navegación vertical */
+@media (max-width: 768px) {
+    .verticalNav {
+        right: 10px;
+        padding: 8px;
+    }
+    
+    .navIcon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .rivalShield {
+        width: 16px;
+        height: 16px;
+        bottom: -3px;
+        right: -3px;
+    }
+    
+    .floatingUserButton {
+        padding: 5px 10px 5px 5px;
+        height: 45px;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .floatingProfileImage {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .floatingUserName {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .verticalNav {
+        right: 5px;
+        padding: 5px;
+    }
+    
+    .navIcon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .verticalNavLinks {
+        gap: 10px;
+    }
+    
+    .floatingUserButton {
+        padding: 3px 8px 3px 3px;
+        height: 40px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .floatingProfileImage {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .floatingUserName {
+        font-size: 0.7rem;
+    }
 }
