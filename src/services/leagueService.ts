@@ -23,10 +23,49 @@ export const initializeLeague = (): void => {
     console.log("Iniciando nueva liga y creando alineaciones válidas...");
     const shuffledPlayers = [...TODOS_LOS_JUGADORES].sort(() => 0.5 - Math.random());
     const leagueState: LeagueState = { teams: {}, market: [], jornadaScores: {} };
-    const ROSTER_SIZE = 18;
+    const ROSTER_SIZE = 18; // Mantener 18, garantizando mínimos: 2 POR, 5 DEF, 5 MED, 4 DEL (16) + 2 extra
+
+    const MIN_QUOTAS: Record<Jugador['posicion'], number> = {
+        POR: 2,
+        DEF: 5,
+        MED: 5,
+        DEL: 4,
+    };
+
+    const drawFromPool = (pool: Jugador[], predicate: (j: Jugador) => boolean, max: number): Jugador[] => {
+        const taken: Jugador[] = [];
+        if (max <= 0) return taken;
+        for (let i = pool.length - 1; i >= 0 && taken.length < max; i--) {
+            const j = pool[i];
+            if (predicate(j)) {
+                taken.push(j);
+                pool.splice(i, 1);
+            }
+        }
+        return taken;
+    };
+
+    const buildRosterWithQuotas = (pool: Jugador[], targetSize: number): Jugador[] => {
+        const team: Jugador[] = [];
+        // 1) Satisfacer mínimos por posición
+        (Object.keys(MIN_QUOTAS) as Jugador['posicion'][]).forEach((pos) => {
+            const need = MIN_QUOTAS[pos];
+            const picked = drawFromPool(pool, (j) => j.posicion === pos, need);
+            // Si no hay suficientes en el pool para esa posición, igual añadir lo que hay
+            team.push(...picked);
+        });
+        // 2) Rellenar hasta targetSize con cualquiera, priorizando equilibrar posiciones si quieres
+        if (team.length < targetSize) {
+            const remaining = targetSize - team.length;
+            const picked = drawFromPool(pool, () => true, remaining);
+            team.push(...picked);
+        }
+        return team;
+    };
 
     TEAMS.forEach(team => {
-        const teamPlayers = shuffledPlayers.splice(0, ROSTER_SIZE);
+        // Construir la plantilla respetando cuotas mínimas desde el pool compartido
+        const teamPlayers = buildRosterWithQuotas(shuffledPlayers, ROSTER_SIZE);
         const randomIndex = Math.floor(Math.random() * AVAILABLE_FORMATIONS.length);
         const formation: FormationName = AVAILABLE_FORMATIONS[randomIndex];
         

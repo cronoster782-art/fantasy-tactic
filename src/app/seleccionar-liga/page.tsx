@@ -14,14 +14,22 @@ export default function SeleccionarLigaPage() {
     const [modo, setModo] = useState<ModoSeleccion>("crear");
     const [tipoLiga, setTipoLiga] = useState<TipoLiga>("publica");
     const [nombreLiga, setNombreLiga] = useState("");
+    const [nombreEquipo, setNombreEquipo] = useState("");
     const [codigoInvitacion, setCodigoInvitacion] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const handleCrearLiga = async () => {
+        if (!nombreEquipo.trim()) {
+            alert("Por favor, introduce el nombre de tu equipo.");
+            return;
+        }
         if (!nombreLiga.trim()) {
             alert("Por favor, introduce un nombre para la liga.");
             return;
         }
+        
+        // Guardar el nombre del equipo en localStorage
+        localStorage.setItem('teamName', nombreEquipo.trim());
         
         // Redirigir a la página de configuración con el tipo de liga y nombre
         const tipoParam = tipoLiga === "privada" ? "privada" : "publica";
@@ -30,6 +38,10 @@ export default function SeleccionarLigaPage() {
     };
 
     const handleUnirseALiga = async () => {
+        if (!nombreEquipo.trim()) {
+            alert("Por favor, introduce el nombre de tu equipo.");
+            return;
+        }
         if (tipoLiga === "privada" && !codigoInvitacion.trim()) {
             alert("Por favor, introduce el código de invitación.");
             return;
@@ -65,6 +77,9 @@ export default function SeleccionarLigaPage() {
             localStorage.setItem("fantasy-ligas", JSON.stringify(ligasGuardadas));
         }
 
+        // Guardar el nombre del equipo en localStorage
+        localStorage.setItem('teamName', nombreEquipo.trim());
+
         // Actualizar sesión del usuario
         await update({ ligaActual: ligaEncontrada.id });
 
@@ -77,6 +92,19 @@ export default function SeleccionarLigaPage() {
             <div className={styles.container}>
                 <h1>Selecciona tu Liga</h1>
                 <p>Elige cómo quieres participar en Fantasy Tactic</p>
+
+                {/* Mensaje inicial */}
+                <div className={styles.initialMessage}>
+                    <h2>Elige el nombre de tu equipo</h2>
+                    <input
+                        type="text"
+                        className={styles.teamNameInput}
+                        placeholder="Introduce el nombre de tu equipo..."
+                        value={nombreEquipo}
+                        onChange={(e) => setNombreEquipo(e.target.value)}
+                        maxLength={30}
+                    />
+                </div>
 
                 {/* Selector de Modo */}
                 <div className={styles.modeSelector}>

@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Jugador } from "@/players";
+import { Jugador, TODOS_LOS_JUGADORES } from "@/players";
 import { AVAILABLE_FORMATIONS, getPositionsForFormation, FormationName, FORMATIONS_LOGIC } from "@/rival-data";
 import { getTeamRoster, saveTeamRoster, TeamRoster, buildValidLineupForFormation } from "@/services/leagueService";
 import styles from "./equipo.module.css";
 
 // CAMBIO: La selección ahora guarda el índice del hueco del titular
-type Selection = { type: 'titular' | 'suplente'; player: Jugador; slotIndex: number; } | null;
+type Selection = { type: 'titular' | 'suplente' | 'grada'; player: Jugador; slotIndex: number; } | null;
 
 // --- Componentes de la Interfaz ---
 function EstadoIcon({ estado }: { estado: Jugador['estado'] }) {
@@ -20,9 +20,15 @@ function EstadoIcon({ estado }: { estado: Jugador['estado'] }) {
     }
 }
 
-function FichaEnCampo({ jugador, gridArea, onClick, isSelected }: { jugador: Jugador, gridArea: string, onClick: () => void, isSelected: boolean }) {
+function FichaEnCampo({ jugador, gridArea, onClick, isSelected, isHighlightedAsOption }: { 
+    jugador: Jugador, 
+    gridArea: string, 
+    onClick: () => void, 
+    isSelected: boolean, 
+    isHighlightedAsOption?: boolean 
+}) {
     return (
-        <div className={`${styles.fichaEnCampo} ${isSelected ? styles.selected : ''}`} style={{ gridArea }} onClick={onClick}>
+        <div className={`${styles.fichaEnCampo} ${isSelected ? styles.selected : ''} ${isHighlightedAsOption ? styles.highlightedOption : ''}`} style={{ gridArea }} onClick={onClick}>
             <img src={jugador.img} alt={jugador.nombre} width={50} height={50} className={styles.jugadorImagen} />
             <div className={styles.puntuacionOverlayCampo}>-</div>
             <EstadoIcon estado={jugador.estado} />
@@ -31,24 +37,42 @@ function FichaEnCampo({ jugador, gridArea, onClick, isSelected }: { jugador: Jug
     );
 }
 
-function SuplenteCard({ jugador, onClick, isHighlighted }: { jugador: Jugador, onClick: () => void, isHighlighted: boolean }) {
+function SuplenteCard({ jugador, onClick, isHighlighted, isHighlightedAsOption }: { 
+    jugador: Jugador, 
+    onClick: () => void, 
+    isHighlighted: boolean, 
+    isHighlightedAsOption?: boolean 
+}) {
     return (
-        <div className={`${styles.suplenteCard} ${isHighlighted ? styles.highlighted : ''}`} onClick={onClick}>
-            <img src={jugador.img} alt={jugador.nombre} width={40} height={40} className={styles.jugadorImagen} />
+        <div className={`${styles.suplenteCard} ${isHighlighted ? styles.highlighted : ''} ${isHighlightedAsOption ? styles.highlightedOption : ''}`} onClick={onClick}>
+            <div className={`${styles.posicionBadge} ${styles['posicion' + jugador.posicion]}`}>{jugador.posicion}</div>
+            <div className={styles.suplenteImagenContainer}>
+                <img src={jugador.img} alt={jugador.nombre} width={40} height={40} className={styles.jugadorImagen} />
+                <EstadoIcon estado={jugador.estado} />
+            </div>
             <div className={styles.suplenteInfo}>
                 <span className={styles.suplenteNombre}>{jugador.nombre}</span>
-                <span className={styles.suplentePosicion}>{jugador.posicion}</span>
             </div>
-            <EstadoIcon estado={jugador.estado} />
         </div>
     );
 }
 
-function BanquilloSlotVacio() {
-    return <div className={styles.banquilloSlotVacio}></div>;
+function BanquilloSlotVacio({ posicionEsperada }: { posicionEsperada?: string }) {
+    return (
+        <div className={styles.banquilloSlotVacio}>
+            <span className={styles.posicionEsperada}>{posicionEsperada || '+'}</span>
+        </div>
+    );
 }
 
-function JugadorCard({ jugador, onSellClick }: { jugador: Jugador; onSellClick: (j: Jugador) => void }) {
+function JugadorCard({ jugador, onSellClick, isConvocado = true, onSelectClick, isHighlighted = false, isHighlightedAsOption = false }: { 
+    jugador: Jugador; 
+    onSellClick: (j: Jugador) => void;
+    isConvocado?: boolean;
+    onSelectClick?: (j: Jugador) => void;
+    isHighlighted?: boolean;
+    isHighlightedAsOption?: boolean;
+}) {
     const getPuntuacionClass = (p: number | null) => {
         if (p === null) return styles.noJugado;
         if (p < 0) return styles.puntosNegativos;
@@ -58,8 +82,13 @@ function JugadorCard({ jugador, onSellClick }: { jugador: Jugador; onSellClick: 
         return styles.puntosAltos;
     };
     return (
-        <div className={styles.jugadorCard}>
-            <div className={styles.posicionBadge}>{jugador.posicion}</div>
+        <div 
+            className={`${styles.jugadorCard} ${!isConvocado ? styles.noConvocado : ''} ${isHighlighted ? styles.highlighted : ''} ${isHighlightedAsOption ? styles.highlightedOption : ''}`}
+            onClick={onSelectClick ? () => onSelectClick(jugador) : undefined}
+            style={{ cursor: onSelectClick ? 'pointer' : 'default' }}
+        >
+            <div className={`${styles.posicionBadge} ${styles['posicion' + jugador.posicion]}`}>{jugador.posicion}</div>
+            {!isConvocado && <div className={styles.noConvocadoBadge}>NC</div>}
             <div className={styles.jugadorImagenContainer}>
                 <img src={jugador.img} alt={jugador.nombre} width={70} height={70} className={styles.jugadorImagen} />
                 <div className={styles.puntuacionOverlay}>-</div>
@@ -96,14 +125,40 @@ export default function EquipoPage() {
     
     const MY_TEAM_NAME = "Naranjitos F.C.";
 
+    // Elimina duplicados entre titular y suplentes y garantiza consistencia
+    const sanitizeRoster = (r: TeamRoster): TeamRoster => {
+        const seen = new Set<number>();
+        // Mantener 11 slots en lineup
+        const cleanLineup: (Jugador | null)[] = r.lineup.map((p) => {
+            if (!p) return null;
+            if (seen.has(p.id)) return null; // si por error estaba duplicado, vaciamos el slot
+            seen.add(p.id);
+            return p;
+        });
+        const cleanSuplentes: Jugador[] = [];
+        for (const s of r.suplentes) {
+            if (!seen.has(s.id)) {
+                seen.add(s.id);
+                cleanSuplentes.push(s);
+            }
+        }
+        return { lineup: cleanLineup, suplentes: cleanSuplentes, formation: r.formation };
+    };
+
     useEffect(() => {
         const teamRoster = getTeamRoster(MY_TEAM_NAME);
-        setRoster(teamRoster);
+        const cleaned = sanitizeRoster(teamRoster);
+        if (JSON.stringify(cleaned) !== JSON.stringify(teamRoster)) {
+            // Persistimos la corrección para no arrastrar duplicados
+            saveTeamRoster(MY_TEAM_NAME, cleaned);
+        }
+        setRoster(cleaned);
         setIsLoading(false);
     }, []);
 
     const updateRoster = (newRoster: TeamRoster) => {
-        setRoster(newRoster);
+        const cleaned = sanitizeRoster(newRoster);
+        setRoster(cleaned);
         setHasUnsavedChanges(true);
         setSelection(null);
     };
@@ -141,10 +196,47 @@ export default function EquipoPage() {
         }
     };
 
+    const handleSelectGrada = (jugadorGrada: Jugador) => {
+        if (selection?.type === 'suplente' && selection.player.posicion === jugadorGrada.posicion && roster) {
+            // Intercambiar prioridades dentro de 'suplentes' para que cambien quiénes son visibles (no cambiar la membresía)
+            const suplentes = [...roster.suplentes];
+            const jugadorSuplente = selection.player;
+
+            const idxA = suplentes.findIndex(s => s.id === jugadorSuplente.id); // suplente visible seleccionado
+            const idxB = suplentes.findIndex(s => s.id === jugadorGrada.id);     // suplente actualmente en grada
+
+            let newSuplentes: Jugador[] = [];
+            if (idxA !== -1 && idxB !== -1) {
+                // Ambos existen en el array de suplentes: swap de posiciones para alterar visibilidad por distribución
+                [suplentes[idxA], suplentes[idxB]] = [suplentes[idxB], suplentes[idxA]];
+                newSuplentes = suplentes;
+            } else {
+                // Caso resiliente: si alguno no está (no debería pasar), reinsertar sin duplicados
+                const cleaned = suplentes.filter(s => s.id !== jugadorSuplente.id && s.id !== jugadorGrada.id);
+                const insertAt = idxA !== -1 ? Math.min(idxA, cleaned.length) : cleaned.length;
+                newSuplentes = [
+                    ...cleaned.slice(0, insertAt),
+                    jugadorGrada, // ocupa la posición del visible seleccionado
+                    ...cleaned.slice(insertAt),
+                    jugadorSuplente // se va al final (grada)
+                ];
+            }
+
+            updateRoster({ ...roster, suplentes: newSuplentes });
+        } else {
+            // Caso: Seleccionar/Deseleccionar jugador de la grada
+            setSelection(prev => prev?.type === 'grada' && prev.player.id === jugadorGrada.id ? null : { type: 'grada', player: jugadorGrada, slotIndex: -1 });
+        }
+    };
+
     const handleFormationChange = (newFormationString: string) => {
         if (!roster) return;
         const newFormation = newFormationString as FormationName;
-        const fullRoster = [...roster.lineup.filter(p => p !== null) as Jugador[], ...roster.suplentes];
+        // Construir roster único por id antes de reubicar
+        const fullRosterRaw = [...roster.lineup.filter(p => p !== null) as Jugador[], ...roster.suplentes];
+        const uniqueMap = new Map<number, Jugador>();
+        for (const j of fullRosterRaw) uniqueMap.set(j.id, j);
+        const fullRoster = Array.from(uniqueMap.values());
         const newValidatedRoster = buildValidLineupForFormation(fullRoster, newFormation);
         updateRoster(newValidatedRoster);
     };
@@ -181,34 +273,94 @@ export default function EquipoPage() {
     
     const posiciones = getPositionsForFormation(roster.formation);
     const todaLaPlantilla = [...roster.lineup.filter(p => p !== null) as Jugador[], ...roster.suplentes];
+    
+    // Calcular banquillo VISIBLE con distribución específica
+    const banquilloDistribucion = {
+        'POR': roster.suplentes.filter(j => j.posicion === 'POR').slice(0, 1),
+        'DEF': roster.suplentes.filter(j => j.posicion === 'DEF').slice(0, 2),
+        'MED': roster.suplentes.filter(j => j.posicion === 'MED').slice(0, 2),
+        'DEL': roster.suplentes.filter(j => j.posicion === 'DEL').slice(0, 2)
+    };
+    
+    // Jugadores que REALMENTE aparecen en el banquillo (según distribución)
+    const suplentesVisibles = [
+        ...banquilloDistribucion.POR,
+        ...banquilloDistribucion.DEF,
+        ...banquilloDistribucion.MED,
+        ...banquilloDistribucion.DEL
+    ];
+    
+    // Identificar jugadores convocados REALES (solo los que están en campo + banquillo visible)
+    const titularesReales = roster.lineup.filter(p => p !== null) as Jugador[];
+    const jugadoresConvocadosReales = [...titularesReales, ...suplentesVisibles];
+    const jugadoresConvocados = new Set(jugadoresConvocadosReales.map(j => j.id));
+    
+    // Jugadores en la grada: jugadores del roster que no están en convocados visibles
+    const jugadoresGrada = todaLaPlantilla.filter((j: Jugador) => !jugadoresConvocados.has(j.id));
+    
+    console.log('DEBUG - Total jugadores del equipo (roster actual):', todaLaPlantilla.length);
+    console.log('DEBUG - Titulares:', titularesReales.length);
+    console.log('DEBUG - Suplentes visibles:', suplentesVisibles.length);
+    console.log('DEBUG - Total convocados:', jugadoresConvocados.size);
+    console.log('DEBUG - Jugadores en grada:', jugadoresGrada.length);
+    console.log('DEBUG - Nombres en grada:', jugadoresGrada.map(j => j.nombre));
+    
+    // Ordenar plantilla por posiciones: POR, DEF, MED, DEL  
+    const plantillaOrdenada = jugadoresConvocadosReales.sort((a, b) => {
+        const ordenPosiciones = { 'POR': 1, 'DEF': 2, 'MED': 3, 'DEL': 4 };
+        return ordenPosiciones[a.posicion] - ordenPosiciones[b.posicion];
+    });
+    
+    // Crear banquillo con distribución específica: 1 POR, 2 DEF, 2 MED, 2 DEL
     const BENCH_SIZE = 7;
-    const banquillo = [...roster.suplentes];
-    while (banquillo.length < BENCH_SIZE) { banquillo.push(null as any); }
+    
+    // Construir banquillo ordenado respetando la distribución
+    const banquillo: (Jugador | null)[] = [
+        ...banquilloDistribucion.POR,
+        ...Array(1 - banquilloDistribucion.POR.length).fill(null),
+        ...banquilloDistribucion.DEF,
+        ...Array(2 - banquilloDistribucion.DEF.length).fill(null),
+        ...banquilloDistribucion.MED,
+        ...Array(2 - banquilloDistribucion.MED.length).fill(null),
+        ...banquilloDistribucion.DEL,
+        ...Array(2 - banquilloDistribucion.DEL.length).fill(null)
+    ];
 
     return (
         <main className={`${styles.main} page-container-animated`}>
             <div className={`${styles.card} ${styles.tacticaLayout}`}>
                 <div className={styles.banquilloContainer}>
-                    <h3>Banquillo</h3>
-                    {hasUnsavedChanges && (
-                        <button className={styles.saveButton} onClick={handleSaveChanges}>
-                            Guardar Cambios
-                        </button>
-                    )}
+                    <div className={styles.banquilloHeader}>
+                        <h3>Banquillo</h3>
+                        {hasUnsavedChanges && (
+                            <button className={styles.saveButton} onClick={handleSaveChanges}>
+                                Guardar Cambios
+                            </button>
+                        )}
+                    </div>
                     <div className={styles.suplentesLista}>
-                        {banquillo.map((suplente, index) => 
-                            suplente ? (
+                        {banquillo.map((suplente, index) => {
+                            // Determinar la posición esperada según el índice
+                            const posicionesEsperadas = ['POR', 'DEF', 'DEF', 'MED', 'MED', 'DEL', 'DEL'];
+                            const posicionEsperada = posicionesEsperadas[index];
+                            
+                            return suplente ? (
                                 <SuplenteCard 
                                     key={suplente.id} 
                                     jugador={suplente} 
                                     onClick={() => handleSelectSuplente(suplente)}
-                                    isHighlighted={
-                                        (selection?.type === 'titular' && selection.player.posicion === suplente.posicion) ||
-                                        (selection?.type === 'suplente' && selection.player.id === suplente.id)
+                                    isHighlighted={selection?.type === 'suplente' && selection.player.id === suplente.id}
+                                    isHighlightedAsOption={
+                                        (selection?.type === 'titular' && 
+                                        selection.player.posicion === suplente.posicion &&
+                                        selection.player.id !== suplente.id) ||
+                                        (selection?.type === 'grada' && 
+                                        selection.player.posicion === suplente.posicion &&
+                                        selection.player.id !== suplente.id)
                                     }
                                 />
-                            ) : <BanquilloSlotVacio key={`vacio-${index}`} />
-                        )}
+                            ) : <BanquilloSlotVacio key={`vacio-${index}`} posicionEsperada={posicionEsperada} />;
+                        })}
                     </div>
                 </div>
                 <div className={styles.campoContainer}>
@@ -235,6 +387,11 @@ export default function EquipoPage() {
                                     gridArea={gridPos}
                                     onClick={() => handleSelectTitular(jugadorEnPosicion, index)}
                                     isSelected={selection?.slotIndex === index}
+                                    isHighlightedAsOption={
+                                        selection?.type === 'suplente' && 
+                                        selection.player.posicion === jugadorEnPosicion.posicion &&
+                                        selection.player.id !== jugadorEnPosicion.id
+                                    }
                                 />
                             ) : (
                                 <CampoSlotVacio 
@@ -248,13 +405,71 @@ export default function EquipoPage() {
                     </div>
                 </div>
             </div>
+            
+            {/* Sección Grada - Jugadores no convocados justo debajo del campo */}
+            {jugadoresGrada.length > 0 && (
+                <div className={styles.gradaSection}>
+                    <div className={styles.gradaContainer}>
+                        <h3 className={styles.gradaTitle}>Grada</h3>
+                        {jugadoresGrada.map((jugador: Jugador) => {
+                            const esGradaSeleccionado = selection?.type === 'grada' && selection.player.id === jugador.id;
+                            const esPosibleIntercambio = selection?.type === 'suplente' && selection.player.posicion === jugador.posicion;
+                            
+                            return (
+                                <SuplenteCard 
+                                    key={jugador.id} 
+                                    jugador={jugador} 
+                                    onClick={() => handleSelectGrada(jugador)}
+                                    isHighlighted={esGradaSeleccionado}
+                                    isHighlightedAsOption={esPosibleIntercambio}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
 
             <div className={styles.card}>
-                <h2>Mi Plantilla (Total: {todaLaPlantilla.length}/18)</h2>
-                <div className={styles.plantillaGrid}>
-                    {todaLaPlantilla.map((jugador) => (
-                        <JugadorCard key={jugador.id} jugador={jugador} onSellClick={handleOpenModal} />
-                    ))}
+                <h2>Mi Plantilla (Total: {todaLaPlantilla.length})</h2>
+                <div className={styles.plantillaPorPosiciones}>
+                    {['POR', 'DEF', 'MED', 'DEL'].map((posicion) => {
+                        const jugadoresPosicion = plantillaOrdenada.filter(j => j.posicion === posicion);
+                        const nombrePosicion = {
+                            'POR': 'Porteros',
+                            'DEF': 'Defensas', 
+                            'MED': 'Centrocampistas',
+                            'DEL': 'Delanteros'
+                        };
+                        const clasePosicion = {
+                            'POR': 'porteros',
+                            'DEF': 'defensas',
+                            'MED': 'centrocampistas', 
+                            'DEL': 'delanteros'
+                        };
+                        
+                        // Mostrar todos los jugadores del equipo (convocados + grada) sin distinción
+                        const jugadoresConvocadosPosicion = jugadoresPosicion;
+                        const jugadoresGradaPosicion = jugadoresGrada.filter((j: Jugador) => j.posicion === posicion);
+                        const todosLosJugadoresPosicion = [...jugadoresConvocadosPosicion, ...jugadoresGradaPosicion];
+        
+        return todosLosJugadoresPosicion.length > 0 ? (
+                            <div key={posicion} className={styles.seccionPosicion}>
+                                <h3 className={`${styles.tituloPosicion} ${styles[clasePosicion[posicion as keyof typeof clasePosicion]]}`}>
+                                    {nombrePosicion[posicion as keyof typeof nombrePosicion]} ({todosLosJugadoresPosicion.length})
+                                </h3>
+                                <div className={styles.plantillaGrid}>
+                                    {todosLosJugadoresPosicion.map((jugador) => (
+                                        <JugadorCard 
+                                            key={jugador.id} 
+                                            jugador={jugador} 
+                                            onSellClick={handleOpenModal}
+                                            isConvocado={true}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        ) : null;
+                    })}
                 </div>
             </div>
             

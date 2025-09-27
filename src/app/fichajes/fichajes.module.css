@@ -283,3 +283,24 @@
     background-color: #5cb85c;
 }
 
+/* Colores específicos para badges de posición */
+.posicionPOR {
+  background-color: #FFD700 !important;
+  color: #000 !important;
+}
+
+.posicionDEF {
+  background-color: #4A90E2 !important;
+  color: #fff !important;
+}
+
+.posicionMED {
+  background-color: #5CB85C !important;
+  color: #fff !important;
+}
+
+.posicionDEL {
+  background-color: #E74C3C !important;
+  color: #fff !important;
+}
+

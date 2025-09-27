@@ -34,6 +34,49 @@
     margin-bottom: 30px;
 }
 
+/* Mensaje inicial */
+.initialMessage {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.initialMessage h2 {
+    color: #FFD700;
+    font-family: var(--font-chalk);
+    font-size: 1.8rem;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.teamNameInput {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px 16px;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-family: var(--font-chalk);
+}
+
+.teamNameInput:focus {
+    outline: none;
+    border-color: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.teamNameInput::placeholder {
+    color: #999;
+}
+
 /* Selector de modo (Crear/Unirse) */
 .modeSelector {
     display: flex;

@@ -25,20 +25,30 @@
 .tacticaLayout {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-start; /* Cambio: volver a flex-start para mejor alineación */
   gap: 2rem;
   flex-wrap: wrap;
+  min-height: 650px; /* Aumentar altura mínima */
 }
 
 .banquilloContainer {
-  flex-basis: 250px;
+  flex-basis: 300px; /* Ajuste para acomodar 7 jugadores mejor */
   flex-grow: 0;
   display: flex;
   flex-direction: column;
+  max-height: 600px; /* Aumentar para alinearse con el campo más grande */
+}
+
+.banquilloHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 .campoContainer {
-  flex-basis: 450px;
+  flex-basis: auto; /* Cambio: auto para que se ajuste al tamaño real */
   flex-grow: 0;
   display: flex;
   flex-direction: column;
@@ -48,21 +58,41 @@
 .suplentesLista {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem; /* Reducir gap entre jugadores del banquillo */
+  justify-content: flex-start; /* Alinear al inicio */
+  flex: 1; /* Ocupar espacio disponible */
+  max-height: 520px; /* Aumentar altura máxima */
+  overflow-y: visible; /* Eliminar scroll */
 }
 
 .suplenteCard {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem; /* Reducir gap interno */
   background-color: rgba(255, 255, 255, 0.05);
-  padding: 0.5rem;
+  padding: 0.5rem 0.6rem; /* Reducir padding para menos espacio */
   border-radius: 8px;
   position: relative;
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 0.2s ease-in-out;
+  min-height: 50px; /* Reducir altura ligeramente */
 }
+
+.suplenteCard .posicionBadge {
+  position: static; /* No absoluto para banquillo */
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 4px 6px;
+  border-radius: 4px;
+  min-width: 30px;
+  text-align: center;
+}
+.suplenteImagenContainer {
+  position: relative;
+  margin-bottom: 0.3rem;
+}
+
 .suplenteInfo {
   display: flex;
   flex-direction: column;
@@ -75,10 +105,62 @@
   color: #ccc;
 }
 .banquilloSlotVacio {
-  height: 56px;
+  min-height: 50px; /* Coincidir con nueva altura de suplenteCard */
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px dashed rgba(255, 255, 255, 0.2);
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 1.2rem;
+  position: relative;
+}
+
+.posicionEsperada {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.separadorPosicion {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  margin: 0.3rem 0;
+}
+
+/* Estilos para jugadores no convocados */
+.noConvocado {
+  opacity: 0.6;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.noConvocado:hover {
+  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.noConvocadoBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(255, 69, 0, 0.8);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.subTitulo {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 0.75rem;
 }
 
 .headerCampo {
@@ -100,10 +182,11 @@
 }
 
 .campo {
-  width: 100%;
+  width: auto; /* Cambio: auto en lugar de 100% */
+  height: 600px; /* Aumentamos altura para mejor visualización */
   aspect-ratio: 7 / 10;
   background-image: url('/campo-textura.jpg');
-  background-size: contain;
+  background-size: cover; /* Cambio: cover para rellenar completamente */
   background-position: center;
   background-repeat: no-repeat;
   border: 2px solid #fff;
@@ -204,16 +287,17 @@
 
 /* === ESTILO PARA EL BOTÓN DE GUARDAR === */
 .saveButton {
-    margin-top: 1.5rem;
-    padding: 12px 24px;
-    font-size: 1.1rem;
+    margin: 0; /* Eliminar margin */
+    padding: 8px 16px; /* Reducir padding para que sea más compacto */
+    font-size: 0.9rem; /* Reducir tamaño de fuente */
     background-color: #5cb85c;
     border: 2px solid #fff;
     border-style: solid;
     color: #fff;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    width: 100%;
+    border-radius: 6px; /* Añadir border radius */
+    white-space: nowrap; /* Evitar que se rompa el texto */
 }
 
 .saveButton:hover {
@@ -222,25 +306,20 @@
 }
 /* ============================================== */
 
-.plantillaGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1rem;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 1rem;
-  border-radius: 8px;
-}
+/* Estilo removido - ahora se usa el de la sección por posiciones */
 .jugadorCard {
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  padding: 1rem;
+  padding: 0.8rem; /* Reducir padding */
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   overflow: hidden;
   transition: background-color 0.2s;
+  width: 150px; /* Ancho fijo para mejor alineación */
+  flex-shrink: 0; /* Evitar que se compriman */
 }
 .jugadorCard:hover {
   background-color: rgba(255, 255, 255, 0.05);
@@ -256,16 +335,37 @@
   padding: 2px 6px;
   border-radius: 4px;
 }
+
+/* Colores específicos para badges de posición */
+.posicionPOR {
+  background-color: #FFD700 !important;
+  color: #000 !important;
+}
+
+.posicionDEF {
+  background-color: #4A90E2 !important;
+  color: #fff !important;
+}
+
+.posicionMED {
+  background-color: #5CB85C !important;
+  color: #fff !important;
+}
+
+.posicionDEL {
+  background-color: #E74C3C !important;
+  color: #fff !important;
+}
 .jugadorImagenContainer {
   position: relative;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem; /* Reducir margen inferior */
 }
 .jugadorInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.5rem;
+  gap: 0.3rem; /* Reducir gap interno de la info del jugador */
 }
 .jugadorNombre {
   font-size: 0.9rem;
@@ -406,4 +506,193 @@
     border-color: #ffd700 !important; /* !important para asegurar que sobreescribe */
     background-color: rgba(255, 215, 0, 0.2) !important;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+/* Nueva clase para opciones válidas de intercambio */
+.highlightedOption {
+    border-color: #FFD700 !important; /* Amarillo brillante para opciones disponibles */
+    background-color: rgba(255, 215, 0, 0.25) !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    animation: pulse 1.5s infinite;
+}
+
+/* Animación de pulso para hacer más visible las opciones */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 215, 0, 1);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    }
+}
+
+/* Responsividad para el nuevo layout */
+@media (max-width: 768px) {
+    .tacticaLayout {
+        flex-direction: column;
+        align-items: center;
+        min-height: auto;
+    }
+    
+    .banquilloContainer {
+        order: 2; /* Banquillo debajo del campo en móvil */
+        flex-basis: auto;
+        width: 100%;
+        max-width: 350px;
+        max-height: none;
+    }
+    
+    .campoContainer {
+        order: 1; /* Campo arriba en móvil */
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    .campo {
+        height: 450px; /* Ajustar altura en móvil para el campo más grande */
+    }
+    
+    .suplentesLista {
+        gap: 0.4rem; /* Reducir aún más el gap en móvil */
+    }
+    
+    .suplenteCard {
+        min-height: 46px; /* Altura menor en móvil */
+        padding: 0.4rem 0.5rem;
+        gap: 0.5rem;
+    }
+    
+    .banquilloHeader {
+        flex-direction: column; /* Stack vertical en móvil */
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .banquilloHeader h3 {
+        margin: 0;
+    }
+    
+    .saveButton {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+    
+    /* Ajustes para plantilla en móvil */
+    .plantillaPorPosiciones {
+        gap: 0.75rem; /* Aún menos espacio en móvil */
+    }
+    
+    .seccionPosicion {
+        padding: 0.75rem; /* Menos padding en móvil */
+    }
+    
+    .tituloPosicion {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .plantillaGrid {
+        gap: 0.5rem; /* Menos gap en móvil */
+    }
+    
+    .jugadorCard {
+        width: 140px; /* Ancho menor en móvil */
+        padding: 0.6rem;
+    }
+}
+
+/* Estilos para plantilla organizada por posiciones */
+.plantillaPorPosiciones {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Reducir espacio entre secciones de posiciones */
+}
+
+.seccionPosicion {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 1rem; /* Reducir padding interno de cada sección */
+  border-left: 4px solid #fff;
+}
+
+.tituloPosicion {
+  margin: 0 0 0.75rem 0; /* Reducir margen inferior del título */
+  font-size: 1.2rem; /* Reducir ligeramente el tamaño de fuente */
+  font-weight: bold;
+  text-align: center; /* Centrar títulos de posición */
+}
+
+/* Colores específicos por posición */
+.tituloPosicion.porteros {
+  color: #FFD700; /* Amarillo para porteros */
+}
+
+.tituloPosicion.defensas {
+  color: #4A90E2; /* Azul para defensas */
+}
+
+.tituloPosicion.centrocampistas {
+  color: #5CB85C; /* Verde para centrocampistas */
+}
+
+.tituloPosicion.delanteros {
+  color: #E74C3C; /* Rojo para delanteros */
+}
+
+.plantillaGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem; /* Reducir gap entre jugadores */
+  justify-content: center; /* Centrar jugadores */
+  align-items: flex-start;
+}
+
+/* Estilos para la sección Grada */
+.gradaContainer {
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 1200px;
+  margin-top: 1rem;
+}
+
+.gradaContainer h2 {
+  text-align: center;
+  color: #02020243;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #FFD700;
+  padding-bottom: 0.5rem;
+}
+
+/* Estilos para la grada horizontal debajo del campo */
+.gradaSection {
+  width: 100%;
+  margin: 0.2rem auto 1rem auto; /* Mínimo espacio arriba, normal abajo */
+  max-width: 1200px;
+}
+
+.gradaContainer {
+  display: flex;
+  justify-content: flex-start; /* Alinear contenido a la izquierda */
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.8rem 1rem;
+  background-color: rgba(0, 0, 0, 0.85); /* Mismo fondo oscuro que el banquillo */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil como el banquillo */
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.gradaTitle {
+  color: #ffffff; /* Blanco como otros títulos en fondo oscuro */
+  font-size: 1.1rem;
+  margin: 0 1rem 0 0; /* Solo margen derecho para separar del primer jugador */
+  white-space: nowrap; /* Evitar que se rompa la línea */
 }

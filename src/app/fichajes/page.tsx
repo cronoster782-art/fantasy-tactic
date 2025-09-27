@@ -52,7 +52,7 @@ function JugadorCard({ jugador, onBidClick }: { jugador: Jugador; onBidClick: (j
   };
   return (
     <div className={styles.jugadorCard}>
-      <div className={styles.posicionBadge}>{jugador.posicion}</div>
+      <div className={`${styles.posicionBadge} ${styles['posicion' + jugador.posicion]}`}>{jugador.posicion}</div>
       <div className={styles.jugadorImagenContainer}>
         <img src={jugador.img} alt={jugador.nombre} width={70} height={70} className={styles.jugadorImagen} />
         <div className={styles.puntuacionOverlay}>-</div>

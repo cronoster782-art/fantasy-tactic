@@ -90,8 +90,6 @@ Configuración:
                 <h1>Configurar "{nombreLiga}"</h1>
                 <p>Personaliza las reglas de tu liga</p>
 
-
-
                 {/* Número de Participantes */}
                 <div className={styles.section}>
                     <h3>Participantes</h3>
